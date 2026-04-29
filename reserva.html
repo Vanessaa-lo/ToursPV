@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Reservar Servicio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body { background-color:#f4f6f9; }
+
+.hero{
+    position:relative;
+    border-radius:22px;
+    overflow:hidden;
+    margin-bottom:35px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+.hero img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+.hero-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,.1));
+    display:flex;
+    align-items:flex-end;
+    padding:25px;
+}
+.hero-overlay h3{
+    color:white;
+    font-weight:700;
+    margin:0;
+}
+
+.card-premium{
+    background:white;
+    border-radius:20px;
+    padding:35px;
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+.form-control{
+    border-radius:14px;
+    padding:10px 15px;
+}
+
+.btn-primary{
+    background:#2563eb;
+    border:none;
+    border-radius:14px;
+    padding:12px;
+}
+
+.resumen-box{
+    background:white;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+    position:sticky;
+    top:40px;
+}
+
+.resumen-item{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+}
+
+.total{
+    font-size:28px;
+    font-weight:700;
+    color:#2563eb;
+}
+</style>
+</head>
+<body>
+
+<div class="container py-5">
+
+<a href="cliente_home.html" class="btn btn-outline-secondary mb-4">
+← Volver al inicio
+</a>
+
+<!-- Imagen de ejemplo -->
+<div class="hero">
+<img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+     alt="Imagen ejemplo">
+<div class="hero-overlay">
+<h3 id="tituloServicio">Servicio</h3>
+</div>
+</div>
+
+<div class="row g-5">
+
+<!-- FORM -->
+<div class="col-lg-7">
+<div class="card-premium">
+
+<p class="text-muted mb-4" id="precioServicio"></p>
+
+<form>
+
+<div class="mb-3">
+<label>Fecha</label>
+<input type="date" class="form-control" required>
+</div>
+
+<div class="row" id="horasContainer">
+<div class="col-md-6 mb-3">
+<label>Hora Entrada</label>
+<input type="time" class="form-control" id="horaEntrada">
+</div>
+<div class="col-md-6 mb-3">
+<label>Hora Salida</label>
+<input type="time" class="form-control" id="horaSalida">
+</div>
+</div>
+
+<div class="mb-4">
+<label>Personas</label>
+<input type="number" class="form-control" id="personas" min="1" required>
+</div>
+
+<button class="btn btn-primary w-100">
+Continuar al Pago
+</button>
+
+</form>
+
+</div>
+</div>
+
+<!-- RESUMEN -->
+<div class="col-lg-5">
+<div class="resumen-box">
+
+<h5 class="mb-4">Resumen</h5>
+
+<div class="resumen-item">
+<span>Servicio</span>
+<span id="resServicio">-</span>
+</div>
+
+<div class="resumen-item">
+<span>Duración</span>
+<span id="resDuracion">-</span>
+</div>
+
+<div class="resumen-item">
+<span>Personas</span>
+<span id="resPersonas">-</span>
+</div>
+
+<hr>
+
+<p class="text-muted mb-1">Total estimado</p>
+<div class="total" id="total">$0 MXN</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const nombre = params.get("nombre");
+const tipo = params.get("tipo");
+const precio = parseFloat(params.get("precio"));
+
+const titulo = document.getElementById("tituloServicio");
+const precioText = document.getElementById("precioServicio");
+const horasContainer = document.getElementById("horasContainer");
+
+const resServicio = document.getElementById("resServicio");
+const resDuracion = document.getElementById("resDuracion");
+const resPersonas = document.getElementById("resPersonas");
+const totalSpan = document.getElementById("total");
+
+const horaEntrada = document.getElementById("horaEntrada");
+const horaSalida = document.getElementById("horaSalida");
+const personas = document.getElementById("personas");
+
+titulo.textContent = nombre;
+resServicio.textContent = nombre;
+
+if (tipo === "yate") {
+    precioText.textContent = "$" + precio + " MXN por hora";
+}
+
+if (tipo === "tour") {
+    precioText.textContent = "$" + precio + " MXN por persona";
+    horasContainer.style.display = "none";
+    resDuracion.textContent = "Duración fija";
+}
+
+function calcularTotal() {
+    let total = 0;
+
+    if (tipo === "yate" && horaEntrada.value && horaSalida.value) {
+        let entrada = new Date("1970-01-01T" + horaEntrada.value);
+        let salida = new Date("1970-01-01T" + horaSalida.value);
+        let horas = (salida - entrada) / (1000 * 60 * 60);
+
+        if (horas > 0) {
+            total = horas * precio;
+            resDuracion.textContent = horas + " horas";
+        }
+    }
+
+    if (tipo === "tour") {
+        total = precio * (personas.value || 1);
+    }
+
+    resPersonas.textContent = personas.value || "-";
+    totalSpan.textContent = "$" + total.toLocaleString() + " MXN";
+}
+
+horaEntrada?.addEventListener("change", calcularTotal);
+horaSalida?.addEventListener("change", calcularTotal);
+personas.addEventListener("input", calcularTotal);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio - Cliente | Tours PV</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            border: none;
+        }
+        .navbar {
+            background-color: #2f4156;
+        }
+        .navbar a {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg px-4">
+    <a class="navbar-brand text-white" href="#">Tours PV</a>
+
+    <div class="ms-auto">
+        <a href="#">Cerrar Sesión</a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <!-- BIENVENIDA -->
+    <h3>Bienvenida, Ana López 👋</h3>
+    <p>Explora nuestros servicios y reserva tu próxima experiencia.</p>
+
+    <!-- CATÁLOGO -->
+    <h4 class="mt-4">Servicios Disponibles</h4>
+
+    <div class="row mt-3">
+
+        <!-- CARD YATE -->
+        <div class="col-md-4">
+            <div class="card p-3">
+                <img src="https://via.placeholder.com/300x180" class="img-fluid rounded mb-3">
+                <h5>Yate de Lujo</h5>
+                <p>Capacidad: 8 personas</p>
+                <p><strong>$3,000 MXN / hora</strong></p>
+                <a href="reserva.html?nombre=Yate%20de%20Lujo&tipo=yate&precio=3000"
+                class="btn btn-primary">
+                    Reservar
+</a>
+            </div>
+        </div>
+
+        <!-- CARD TOUR -->
+        <div class="col-md-4">
+            <div class="card p-3">
+                <img src="https://via.placeholder.com/300x180" class="img-fluid rounded mb-3">
+                <h5>Tour Islas Marietas</h5>
+                <p>Duración: 4 horas</p>
+                <p><strong>$1,200 MXN / persona</strong></p>
+                <a href="reserva.html?nombre=Tour%20Islas%20Marietas&tipo=tour&precio=1200"
+                class="btn btn-primary">
+                    Reservar
+</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MIS RESERVAS -->
+    <h4 class="mt-5">Mis Reservas Recientes</h4>
+
+    <div class="card p-3 mt-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Servicio</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Pago</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Yate de Lujo</td>
+                    <td>19/08/2025</td>
+                    <td><span class="badge bg-success">Confirmada</span></td>
+                    <td><span class="badge bg-success">Pagado</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>
