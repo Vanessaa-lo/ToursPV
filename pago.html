@@ -89,58 +89,49 @@
                     <span>Correo de Contacto:</span>
                     <strong>juan@ejemplo.com</strong>
                 </div>
-                
-                <div class="resumen-item total">
-                    <span>Total a Pagar:</span>
-                    <span>$26,000 MXN</span>
+                <div class="resumen-item">
+                    <span>Teléfono de Contacto:</span>
+                    <strong>322 123 4567</strong>
+                </div>
+
+                <div class="resumen-item" style="border-top: 2px dashed #cbd5e1; margin-top: 15px; padding-top: 15px;">
+                    <span>Total del Servicio:</span>
+                    <strong>$26,000 MXN</strong>
+                </div>
+                <div class="resumen-item total" style="border-top: none; margin-top: 0; padding-top: 8px;">
+                    <span>Anticipo a Pagar Ahora (50%):</span>
+                    <span>$13,000 MXN</span>
+                </div>
+                <div class="resumen-item" style="color: #b45309;">
+                    <span>Saldo Pendiente:</span>
+                    <strong>$13,000 MXN</strong>
                 </div>
             </div>
-            
+
+            <p style="font-size: 0.8rem; color: #64748b; line-height: 1.4; margin: 0 0 12px 0;">
+                * El saldo pendiente ($13,000 MXN) se liquida en <strong>efectivo o transferencia</strong> el día del tour o al abordar el yate.
+            </p>
             <p style="font-size: 0.8rem; color: #64748b; line-height: 1.4; margin: 0;">
-                * Al completar el pago, nuestro sistema validará la disponibilidad inmediatamente y desplegará tu <strong>Código de Reservación Único</strong> en pantalla. También se te enviará una copia digital a tu correo electrónico.
+                * Al completar el pago del anticipo, nuestro sistema validará la disponibilidad inmediatamente y desplegará tu <strong>Código de Reservación Único</strong> en pantalla. También se te enviará una copia digital a tu correo electrónico.
             </p>
         </section>
 
         <aside class="form-col">
-            <h2 class="form-title">Método de Pago</h2>
-            <span class="form-subtitle">Selecciona una de las opciones de pago seguro en línea.</span>
-            
-            <form action="#" method="POST">
-                <div class="metodo-pago-box active">
-                    <label class="radio-label" for="tarjeta">
-                        <input type="radio" id="tarjeta" name="metodo_pago" value="tarjeta" checked>
-                        Tarjeta de Crédito o Débito
-                    </label>
-                    
-                    <div class="campos-tarjeta">
-                        <div>
-                            <input type="text" class="input-checkout" placeholder="Número de Tarjeta (16 dígitos)" required autocomplete="cc-number">
-                        </div>
-                        <div>
-                            <input type="text" class="input-checkout" placeholder="Nombre impreso en la tarjeta" required autocomplete="cc-name">
-                        </div>
-                        <div class="fila-doble">
-                            <div class="campo-mitad">
-                                <input type="text" class="input-checkout" placeholder="MM/AA" required autocomplete="cc-exp">
-                            </div>
-                            <div class="campo-mitad">
-                                <input type="password" class="input-checkout" placeholder="CVC / CVV" maxlength="4" required autocomplete="cc-csc">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <h2 class="form-title">Pago del Anticipo</h2>
+            <span class="form-subtitle">Vas a pagar el 50% de anticipo de forma segura. El resto se liquida el día del servicio.</span>
 
-                <div class="metodo-pago-box">
-                    <label class="radio-label" for="paypal">
-                        <input type="radio" id="paypal" name="metodo_pago" value="paypal">
-                        PayPal / Financiamiento
-                    </label>
-                </div>
+            <div class="metodo-pago-box active" style="text-align: center; padding: 30px 20px;">
+                <p style="color: #475569; font-size: 0.9rem; margin: 0 0 20px 0; line-height: 1.5;">
+                    Al continuar serás redirigido a <strong>Stripe</strong>, nuestra pasarela de pago certificada, donde podrás pagar con tarjeta de crédito o débito. Tus datos de tarjeta nunca son procesados ni almacenados por Tours PV.
+                </p>
+                <img src="/img/stripe-badge.svg" alt="Pagos seguros con Stripe" style="height: 28px; margin-bottom: 20px;">
+            </div>
 
-                <button type="submit" class="btn-pagar">Pagar $26,000.00 MXN</button>
-                
+            <form action="/checkout/stripe" method="POST">
+                <button type="submit" class="btn-pagar">Pagar Anticipo con Stripe — $13,000.00 MXN</button>
+
                 <div class="seguridad-badge">
-                    <span>🔒 Conexión encriptada SSL de 256 bits</span>
+                    <span>🔒 Procesado de forma segura por Stripe (PCI-DSS)</span>
                 </div>
             </form>
         </aside>
@@ -149,3 +140,25 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

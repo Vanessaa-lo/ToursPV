@@ -139,7 +139,7 @@
                                 <td>Yate Black Diamond</td>
                                 <td>15 Oct 2026</td>
                                 <td>$26,000</td>
-                                <td><span class="status-badge status-confirmed">Confirmada</span></td>
+                                <td><span class="status-badge status-pending">Anticipo Pagado</span></td>
                                 <td><button class="btn-view">🖵 Ver</button></td>
                             </tr>
                             <tr>
@@ -194,17 +194,37 @@
                             <span>Detalles de Carga:</span>
                             <span>4 Horas / 8 Pasajeros</span>
                         </div>
-                        <div class="detail-row" style="border-bottom: none; margin-bottom: 20px;">
-                            <span>Monto Pagado:</span>
-                            <span style="color: #16a34a; font-size: 1.1rem;">$26,000.00 MXN</span>
+                        <div class="detail-row">
+                            <span>Total del Servicio:</span>
+                            <span>$26,000.00 MXN</span>
                         </div>
+                        <div class="detail-row">
+                            <span>Anticipo Pagado (Stripe):</span>
+                            <span style="color: #16a34a; font-size: 1.1rem;">$13,000.00 MXN</span>
+                        </div>
+                        <div class="detail-row" style="border-bottom: none; margin-bottom: 20px;">
+                            <span>Saldo Pendiente:</span>
+                            <span style="color: #b45309; font-size: 1.1rem;">$13,000.00 MXN</span>
+                        </div>
+
+                        <form action="#" method="POST" style="border-top: 1px solid #e2e8f0; padding-top: 15px; margin-bottom: 15px;">
+                            <div class="form-group">
+                                <label for="metodo-saldo">Registrar Pago de Saldo Restante</label>
+                                <select id="metodo-saldo" name="metodo_pago_saldo">
+                                    <option value="efectivo">Efectivo</option>
+                                    <option value="transferencia">Transferencia</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-update" style="background-color: #16a34a;">Marcar Saldo como Cobrado</button>
+                        </form>
 
                         <form action="#" method="POST" style="border-top: 1px solid #e2e8f0; padding-top: 15px;">
                             <div class="form-group">
                                 <label for="update-status">Cambiar Estado de Reserva</label>
                                 <select id="update-status" name="estado_reserva">
-                                    <option value="pending">Pendiente (En espera de pago)</option>
-                                    <option value="confirmed" selected>Confirmada / Completada</option>
+                                    <option value="pending">Pendiente (En espera de anticipo)</option>
+                                    <option value="deposit_paid" selected>Anticipo Pagado</option>
+                                    <option value="completed">Completada (Saldo cobrado)</option>
                                     <option value="cancelled">Cancelar Reservación (Liberar espacio)</option>
                                 </select>
                             </div>
