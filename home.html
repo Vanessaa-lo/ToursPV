@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tours PV | Vive la mejor experiencia en Puerto Vallarta</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos base de demostración */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; }
+        .btn-primary { background-color: #0284c7; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .btn-secondary { background-color: #22c55e; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
+        
+        /* Navegación */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; }
+        
+        /* Hero Section */
+        .hero { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/img/hero-vallarta.jpg') center/cover; height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
+        
+        /* Grid de Catálogo */
+        .seccion-catalogo { padding: 50px; max-width: 1200px; margin: 0 auto; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px; }
+        .card { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff; transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 20px; }
+        .precio { font-size: 1.25rem; color: #0284c7; font-weight: bold; }
+        .disponibilidad { font-size: 0.85rem; color: #22c55e; margin-bottom: 15px; display: block; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h2>Tours PV</h2>
+        </div>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/tours">Tours</a>
+            <a href="/yates">Yates</a>
+            <a href="/mis-reservas">Consultar mi Reserva</a>
+        </nav>
+        <a href="https://wa.me/521234567890" class="btn-secondary">Contacto WhatsApp</a>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Descubre el Paraíso en Puerto Vallarta</h1>
+            <p>Yates de lujo y aventuras inolvidables en la Bahía de Banderas.</p>
+            <br>
+            <div>
+                <a href="#tours" class="btn-primary" style="margin-right: 10px;">Ver Tours</a>
+                <a href="#yates" class="btn-primary" style="background-color: transparent; border: 2px solid white;">Explorar Yates</a>
+            </div>
+        </section>
+
+        <section id="tours" class="seccion-catalogo">
+            <h2>Tours Más Populares</h2>
+            <p>Explora nuestras mejores experiencias guiadas.</p>
+            <div class="grid-cards">
+                <div class="card">
+                    <img src="/img/islas-marietas.jpg" alt="Islas Marietas">
+                    <div class="card-body">
+                        <h3>Playa Escondida en Islas Marietas</h3>
+                        <p>Santuario natural con snorkel, kayak y la icónica Playa Escondida.</p>
+                        <span class="precio">$1,500 MXN</span>
+                        <span class="disponibilidad">✔ Disponibilidad diaria</span>
+                        <a href="/tours/islas-marietas" class="btn-primary" style="display: block; text-align: center; margin-top: 10px;">Ver Detalles</a>
+                    </div>
+                </div>
+                </div>
+        </section>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+        <section id="yates" class="seccion-catalogo">
+            <h2>Renta de Yates Exclusivos</h2>
+            <p>Perfectos para eventos, atardeceres y lujo en alta mar.</p>
+            <div class="grid-cards">
+                <div class="card">
+                    <img src="/img/yate-black-diamond.jpg" alt="Yate Black Diamond">
+                    <div class="card-body">
+                        <h3>Yate Black Diamond</h3>
+                        <p><strong>Capacidad:</strong> 10 Personas<br><strong>Tamaño:</strong> 45 Pies</p>
+                        <span class="precio">$3,000 MXN / Hora</span>
+                        <span class="disponibilidad">✔ Disponible hoy</span>
+                        <a href="/yates/black-diamond" class="btn-primary" style="display: block; text-align: center; margin-top: 10px;">Ver Yate</a>
+                    </div>
+                </div>
+                </div>
+        </section>
+    </main>
+
+    <footer style="background-color: #1f2937; color: white; padding: 40px 50px; text-align: center;">
+        <div style="margin-bottom: 20px;">
+            <h3>Tours PV</h3>
+            <p>Puerto Vallarta, Jalisco, México</p>
+        </div>
+        <p>&copy; 2026 Tours PV. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

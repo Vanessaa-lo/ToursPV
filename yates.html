@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renta de Yates | Tours PV</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos específicos para el Catálogo de Embarcaciones */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f9fafb; }
+        
+        /* Contenedor Principal */
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        
+        /* Encabezado de la Sección */
+        .header-seccion { text-align: center; margin-bottom: 35px; }
+        .header-seccion h1 { color: #1e293b; font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
+        .header-seccion p { color: #6b7280; font-size: 1.1rem; margin: 0; }
+        
+        /* Barra de Filtros y Herramientas */
+        .barra-filtros { background: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 40px; display: flex; gap: 15px; justify-content: space-between; align-items: center; flex-wrap: wrap; border: 1px solid #e5e7eb; }
+        .grupo-filtro { display: flex; align-items: center; gap: 10px; }
+        .select-filtro { padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; background-color: white; font-size: 0.9rem; color: #475569; }
+        
+        /* Cuadrícula de Tarjetas (Grid) */
+        .grid-yates { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        
+        /* Estructura de la Tarjeta (Card) */
+        .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; position: relative; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08); }
+        
+        /* Contenedor de Imagen de Ejemplo */
+        .card-img-placeholder { background-color: #e2e8f0; height: 220px; display: flex; align-items: center; justify-content: center; color: #64748b; font-weight: bold; font-size: 1.1rem; position: relative; }
+        
+        /* Comparador rápido (Check integrado) */
+        .comparar-badge { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.95); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.05); color: #1e293b; cursor: pointer; }
+        .comparar-badge input { margin: 0; cursor: pointer; }
+
+        /* Cuerpo de la Tarjeta */
+        .card-body { padding: 25px; display: flex; flex-direction: column; flex: 1; }
+        .card-title { font-size: 1.3rem; font-weight: bold; margin: 0 0 12px 0; color: #1e293b; }
+        
+        /* Lista de Especificaciones Técnicas */
+        .specs-list { list-style: none; padding: 0; margin: 0 0 20px 0; font-size: 0.9rem; color: #475569; line-height: 1.6; }
+        .specs-list li { margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .specs-list strong { color: #0f172a; }
+        
+        /* Caja de Precio y Capacidad */
+        .meta-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+        .precio-tag { display: flex; flex-direction: column; }
+        .precio-label { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; font-weight: bold; }
+        .precio-valor { font-size: 1.4rem; color: #0284c7; font-weight: 800; }
+        .capacidad-tag { font-size: 0.85rem; color: #0284c7; background-color: #e0f2fe; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+        
+        /* Estado de Disponibilidad */
+        .disponibilidad-status { font-size: 0.85rem; color: #16a34a; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo"><h2>Tours PV</h2></div>
+        <nav class="main-nav">
+            <a href="/">Inicio</a>
+            <a href="/tours">Tours</a>
+            <a href="/yates" class="active">Yates</a>
+            <a href="/mis-reservas">Consultar mi Reserva</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="header-seccion">
+            <h1>Renta de Yates Privados</h1>
+            <p>Compara las especificaciones de nuestra flota exclusiva y selecciona la embarcación ideal para tu grupo.</p>
+        </div>
+
+        <div class="barra-filtros">
+            <div class="grupo-filtro">
+                <label for="filtrar-capacidad" style="font-size: 0.9rem; font-weight: 500; color: #475569;">Filtrar por tamaño:</label>
+                <select id="filtrar-capacidad" class="select-filtro">
+                    <option value="todos">Todas las esloras</option>
+                    <option value="pequeno">Menos de 40 pies</option>
+                    <option value="grande">Más de 40 pies</option>
+                </select>
+            </div>
+            <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">
+                Mostrando 3 embarcaciones verificadas
+            </div>
+        </div>
+
+        <div class="grid-yates">
+            
+            <div class="card">
+                <div class="card-img-placeholder">
+                    <label class="comparar-badge">
+                        <input type="checkbox" id="comp-1"> Comparar
+                    </label>
+                    [Yate Happy Hour]
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Yate Happy Hour</h3>
+                    
+                    <ul class="specs-list">
+                        <li>• <strong>Tamaño:</strong> 40 Pies de eslora</li>
+                        <li>• <strong>Tripulación:</strong> Capitán y 1 Marinero</li>
+                        <li>• <strong>Audio:</strong> Conexión Bluetooth estándar</li>
+                    </ul>
+
+                    <div class="disponibilidad-status">
+                        ✔ Disponible para hoy
+                    </div>
+                    
+                    <div class="meta-box">
+                        <div class="precio-tag">
+                            <span class="precio-label">Precio por Hora</span>
+                            <span class="precio-valor">$5,000 MXN</span>
+                        </div>
+                        <span class="capacidad-tag">Max. 10 Pax</span>
+                    </div>
+                    
+                    <a href="/yates/1" class="btn-primary w-100">Ver Detalles y Reservar</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-placeholder">
+                    <label class="comparar-badge">
+                        <input type="checkbox" id="comp-2"> Comparar
+                    </label>
+                    [Yate Black Diamond]
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Yate Black Diamond</h3>
+                    
+                    <ul class="specs-list">
+                        <li>• <strong>Tamaño:</strong> 48 Pies de eslora</li>
+                        <li>• <strong>Tripulación:</strong> Capitán y 2 Marineros</li>
+                        <li>• <strong>Comodidades:</strong> 2 Camarotes c/ Aire Acondicionado</li>
+                    </ul>
+
+                    <div class="disponibilidad-status">
+                        ✔ Disponible para hoy
+                    </div>
+                    
+                    <div class="meta-box">
+                        <div class="precio-tag">
+                            <span class="precio-label">Precio por Hora</span>
+                            <span class="precio-valor">$6,500 MXN</span>
+                        </div>
+                        <span class="capacidad-tag">Max. 12 Pax</span>
+                    </div>
+                    
+                    <a href="/yates/2" class="btn-primary w-100">Ver Detalles y Reservar</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-placeholder">
+                    <label class="comparar-badge">
+                        <input type="checkbox" id="comp-3"> Comparar
+                    </label>
+                    [Velero Sea Breeze]
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Velero Sea Breeze</h3>
+                    
+                    <ul class="specs-list">
+                        <li>• <strong>Tamaño:</strong> 36 Pies de eslora</li>
+                        <li>• <strong>Tripulación:</strong> Capitán certificado</li>
+                        <li>• <strong>Experiencia:</strong> Navegación clásica a vela</li>
+                    </ul>
+
+                    <div class="disponibilidad-status" style="color: #f59e0b;">
+                        ⚠ Última embarcación tipo velero
+                    </div>
+                    
+                    <div class="meta-box">
+                        <div class="precio-tag">
+                            <span class="precio-label">Precio por Hora</span>
+                            <span class="precio-valor">$3,500 MXN</span>
+                        </div>
+                        <span class="capacidad-tag">Max. 8 Pax</span>
+                    </div>
+                    
+                    <a href="/yates/3" class="btn-primary w-100">Ver Detalles y Reservar</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>

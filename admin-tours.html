@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Tours | Admin Tours PV</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Reutilizamos los estilos del Layout (Sidebar y Topbar) */
+        body { margin: 0; background-color: #f3f4f6; display: flex; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .sidebar { width: 260px; background-color: #1e293b; color: white; display: flex; flex-direction: column; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
+        .sidebar-header { padding: 20px; background-color: #0f172a; text-align: center; border-bottom: 1px solid #334155; }
+        .sidebar-header h2 { margin: 0; color: #38bdf8; font-size: 1.5rem; }
+        
+        .sidebar-menu { flex: 1; padding: 20px 0; overflow-y: auto; }
+        .sidebar-menu a { display: block; padding: 15px 25px; color: #cbd5e1; text-decoration: none; font-size: 1rem; border-left: 4px solid transparent; transition: all 0.2s; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background-color: #334155; color: white; border-left-color: #38bdf8; }
+        
+        .sidebar-footer { padding: 20px; border-top: 1px solid #334155; text-align: center; }
+        .btn-logout { background-color: #ef4444; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; }
+        
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .topbar { background-color: white; padding: 20px 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .topbar h1 { margin: 0; font-size: 1.5rem; color: #1e293b; }
+        .content-area { padding: 30px; }
+
+        /* Layout específico para CU-06: Tabla + Formulario */
+        .crud-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 1024px) {
+            .crud-layout { grid-template-columns: 1fr; }
+        }
+
+        /* Estilos de Paneles */
+        .admin-panel { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 25px; }
+        .admin-panel-header { padding: 15px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; }
+        .admin-panel-header h3 { margin: 0; color: #1e293b; font-size: 1.1rem; }
+        
+        /* Tabla de Tours */
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table th, .admin-table td { padding: 12px 20px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
+        .admin-table th { background-color: white; color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; }
+        .admin-table tbody tr:hover { background-color: #f1f5f9; }
+
+        /* Botones de Acción (Editar/Eliminar) */
+        .btn-action { padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; margin-right: 5px; }
+        .btn-edit { background-color: #f59e0b; color: white; }
+        .btn-delete { background-color: #ef4444; color: white; }
+        
+        .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+        .status-active { background-color: #dcfce7; color: #166534; }
+        .status-inactive { background-color: #f1f5f9; color: #64748b; }
+
+        /* Formulario de Agregar Tour */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #475569; font-size: 0.85rem; }
+        input[type="text"], input[type="number"], select, textarea { 
+            width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem; 
+        }
+        input:focus, textarea:focus, select:focus { border-color: #0284c7; outline: none; }
+        .btn-save { background-color: #0284c7; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-save:hover { background-color: #0369a1; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Tours PV</h2>
+            <span style="font-size: 0.8rem; color: #94a3b8;">Admin Panel</span>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="/admin/dashboard">Inicio (Dashboard)</a>
+            <a href="/admin/tours" class="active">Gestionar Tours (CU-06)</a>
+            <a href="/admin/yates">Gestionar Yates (CU-07)</a>
+            <a href="/admin/clientes">Directorio Clientes (CU-08)</a>
+            <a href="/admin/reservas">Reservaciones (CU-09)</a>
+            <a href="/admin/reportes">Reportes (CU-10)</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="btn-logout">Cerrar Sesión</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <h1>Catálogo de Tours</h1>
+            <div>
+                <span style="color: #64748b; margin-right: 15px;">Hola, Admin</span>
+            </div>
+        </header>
+
+        <div class="content-area">
+            
+            <div class="crud-layout">
+                
+                <div class="admin-panel">
+                    <div class="admin-panel-header">
+                        <h3>Tours Registrados</h3>
+                        <span style="font-size: 0.85rem; color: #64748b;">Mostrando 3 resultados</span>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre del Tour</th>
+                                <th>Precio</th>
+                                <th>Duración</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>#001</strong></td>
+                                <td>Playa Escondida en Islas Marietas</td>
+                                <td>$1,500</td>
+                                <td>8 Horas</td>
+                                <td><span class="status-badge status-active">Activo</span></td>
+                                <td>
+                                    <button class="btn-action btn-edit">✎</button>
+                                    <button class="btn-action btn-delete">✕</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#002</strong></td>
+                                <td>Los Arcos, Ánimas y Quimixto</td>
+                                <td>$1,200</td>
+                                <td>8 Horas</td>
+                                <td><span class="status-badge status-active">Activo</span></td>
+                                <td>
+                                    <button class="btn-action btn-edit">✎</button>
+                                    <button class="btn-action btn-delete">✕</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#003</strong></td>
+                                <td>Aventura Nocturna Barco Pirata</td>
+                                <td>$2,100</td>
+                                <td>4 Horas</td>
+                                <td><span class="status-badge status-inactive">Oculto</span></td>
+                                <td>
+                                    <button class="btn-action btn-edit">✎</button>
+                                    <button class="btn-action btn-delete">✕</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="admin-panel" style="padding: 20px;">
+                    <h3 style="margin-top: 0; color: #1e293b; margin-bottom: 20px;">Añadir Nuevo Tour</h3>
+                    
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <label for="nombre_tour">Nombre del Tour *</label>
+                            <input type="text" id="nombre_tour" name="nombre_tour" placeholder="Ej. Snorkel en Yelapa" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <textarea id="descripcion" name="descripcion" rows="3" placeholder="Breve descripción del tour..."></textarea>
+                        </div>
+
+                        <div style="display: flex; gap: 10px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="precio">Precio (MXN) *</label>
+                                <input type="number" id="precio" name="precio" placeholder="0.00" required>
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="duracion">Duración (Horas) *</label>
+                                <input type="number" id="duracion" name="duracion" placeholder="Ej. 4" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estado">Visibilidad</label>
+                            <select id="estado" name="estado">
+                                <option value="activo">Activo (Visible al cliente)</option>
+                                <option value="inactivo">Inactivo (Oculto)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="imagen">URL de Imagen</label>
+                            <input type="text" id="imagen" name="imagen" placeholder="/img/nuevo-tour.jpg">
+                        </div>
+
+                        <button type="submit" class="btn-save">Guardar Tour</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Reservaciones | Admin Tours PV</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos del Layout Base */
+        body { margin: 0; background-color: #f3f4f6; display: flex; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .sidebar { width: 260px; background-color: #1e293b; color: white; display: flex; flex-direction: column; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
+        .sidebar-header { padding: 20px; background-color: #0f172a; text-align: center; border-bottom: 1px solid #334155; }
+        .sidebar-header h2 { margin: 0; color: #38bdf8; font-size: 1.5rem; }
+        
+        .sidebar-menu { flex: 1; padding: 20px 0; overflow-y: auto; }
+        .sidebar-menu a { display: block; padding: 15px 25px; color: #cbd5e1; text-decoration: none; font-size: 1rem; border-left: 4px solid transparent; transition: all 0.2s; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background-color: #334155; color: white; border-left-color: #38bdf8; }
+        
+        .sidebar-footer { padding: 20px; border-top: 1px solid #334155; text-align: center; }
+        .btn-logout { background-color: #ef4444; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; }
+        
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .topbar { background-color: white; padding: 20px 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .topbar h1 { margin: 0; font-size: 1.5rem; color: #1e293b; }
+        .content-area { padding: 30px; }
+
+        /* Layout de Gestión */
+        .crud-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
+        @media (max-width: 1024px) { .crud-layout { grid-template-columns: 1fr; } }
+
+        /* Filtros superiores */
+        .filters-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+        .select-filter { padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; background-color: white; font-size: 0.9rem; }
+
+        /* Paneles y Tablas */
+        .admin-panel { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 25px; }
+        .admin-panel-header { padding: 15px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; }
+        .admin-panel-header h3 { margin: 0; color: #1e293b; font-size: 1.1rem; }
+        
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table th, .admin-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 0.85rem; }
+        .admin-table th { background-color: white; color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; }
+        .admin-table tbody tr:hover { background-color: #f1f5f9; }
+
+        /* Botones de Acción rápidos */
+        .btn-view { padding: 5px 8px; background-color: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-view:hover { background-color: #e2e8f0; }
+        
+        /* Status Badges */
+        .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; display: inline-block; }
+        .status-confirmed { background-color: #dcfce7; color: #166534; }
+        .status-pending { background-color: #fef9c3; color: #854d0e; }
+        .status-cancelled { background-color: #fee2e2; color: #991b1b; }
+
+        /* Ficha de Detalles de Reserva */
+        .detail-box { padding: 20px; }
+        .detail-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.9rem; border-bottom: 1px dashed #f1f5f9; padding-bottom: 8px; }
+        .detail-row span:first-child { color: #64748b; font-weight: 500; }
+        .detail-row span:last-child { color: #0f172a; font-weight: 600; }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #475569; font-size: 0.85rem; }
+        select, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem; }
+        .btn-update { background-color: #0284c7; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-update:hover { background-color: #0369a1; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Tours PV</h2>
+            <span style="font-size: 0.8rem; color: #94a3b8;">Admin Panel</span>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="/admin/dashboard">Inicio (Dashboard)</a>
+            <a href="/admin/tours">Gestionar Tours (CU-06)</a>
+            <a href="/admin/yates">Gestionar Yates (CU-07)</a>
+            <a href="/admin/clientes">Directorio Clientes (CU-08)</a>
+            <a href="/admin/reservas" class="active">Reservaciones (CU-09)</a>
+            <a href="/admin/reportes">Reportes (CU-10)</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="btn-logout">Cerrar Sesión</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <h1>Control de Reservaciones</h1>
+            <div>
+                <span style="color: #64748b; margin-right: 15px;">Hola, Admin</span>
+            </div>
+        </header>
+
+        <div class="content-area">
+            
+            <div class="filters-bar">
+                <input type="text" placeholder="Buscar por código de reserva..." value="PV-A7X9V2" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; max-width: 300px; flex: 1;">
+                <select class="select-filter">
+                    <option value="">Todos los estados</option>
+                    <option value="confirmed" selected>Confirmadas / Pagadas</option>
+                    <option value="pending">Pendientes</option>
+                    <option value="cancelled">Canceladas</option>
+                </select>
+                <select class="select-filter">
+                    <option value="">Todos los servicios</option>
+                    <option value="tours">Solo Tours</option>
+                    <option value="yachts">Solo Yates</option>
+                </select>
+            </div>
+
+            <div class="crud-layout">
+                
+                <div class="admin-panel">
+                    <div class="admin-panel-header">
+                        <h3>Listado Global de Ventas</h3>
+                        <span style="font-size: 0.85rem; color: #64748b;">Mostrando resultados filtrados</span>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Cliente</th>
+                                <th>Servicio</th>
+                                <th>Fecha Reserva</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background-color: #f0f9ff; border-left: 4px solid #0284c7;">
+                                <td><strong>PV-A7X9V2</strong></td>
+                                <td>Juan Pérez</td>
+                                <td>Yate Black Diamond</td>
+                                <td>15 Oct 2026</td>
+                                <td>$26,000</td>
+                                <td><span class="status-badge status-confirmed">Confirmada</span></td>
+                                <td><button class="btn-view">🖵 Ver</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>PV-K9L8P4</strong></td>
+                                <td>Roberto Sánchez</td>
+                                <td>Tour Barco Pirata</td>
+                                <td>25 May 2026</td>
+                                <td>$8,400</td>
+                                <td><span class="status-badge status-confirmed">Confirmada</span></td>
+                                <td><button class="btn-view">🖵 Ver</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>PV-M4N5O6</strong></td>
+                                <td>Carlos Ruiz Castillo</td>
+                                <td>Islas Marietas</td>
+                                <td>12 Jun 2026</td>
+                                <td>$4,500</td>
+                                <td><span class="status-badge status-confirmed">Confirmada</span></td>
+                                <td><button class="btn-view">🖵 Ver</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="admin-panel">
+                    <div class="admin-panel-header" style="border-bottom: 2px solid #e2e8f0;">
+                        <h3 style="color: #0284c7;">Detalles: PV-A7X9V2</h3>
+                    </div>
+                    
+                    <div class="detail-box">
+                        <div class="detail-row">
+                            <span>Cliente:</span>
+                            <span>Juan Pérez</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Correo:</span>
+                            <span>juan@ejemplo.com</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Teléfono:</span>
+                            <span>322 123 4567</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Servicio Contratado:</span>
+                            <span>Yate Black Diamond</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Fecha del Servicio:</span>
+                            <span>15 de Octubre, 2026</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Detalles de Carga:</span>
+                            <span>4 Horas / 8 Pasajeros</span>
+                        </div>
+                        <div class="detail-row" style="border-bottom: none; margin-bottom: 20px;">
+                            <span>Monto Pagado:</span>
+                            <span style="color: #16a34a; font-size: 1.1rem;">$26,000.00 MXN</span>
+                        </div>
+
+                        <form action="#" method="POST" style="border-top: 1px solid #e2e8f0; padding-top: 15px;">
+                            <div class="form-group">
+                                <label for="update-status">Cambiar Estado de Reserva</label>
+                                <select id="update-status" name="estado_reserva">
+                                    <option value="pending">Pendiente (En espera de pago)</option>
+                                    <option value="confirmed" selected>Confirmada / Completada</option>
+                                    <option value="cancelled">Cancelar Reservación (Liberar espacio)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="admin-notes">Notas del Administrador (Interno)</label>
+                                <textarea id="admin-notes" rows="3" placeholder="Ej. El cliente solicitó hielos extra y abordará en la marina norte."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-update">Actualizar Reservación</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div> </div>
+    </main>
+
+</body>
+</html>

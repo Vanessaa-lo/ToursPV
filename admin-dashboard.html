@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | Tours PV</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos base del layout (Sidebar y Topbar) */
+        body { margin: 0; background-color: #f3f4f6; display: flex; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .sidebar { width: 260px; background-color: #1e293b; color: white; display: flex; flex-direction: column; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
+        .sidebar-header { padding: 20px; background-color: #0f172a; text-align: center; border-bottom: 1px solid #334155; }
+        .sidebar-header h2 { margin: 0; color: #38bdf8; font-size: 1.5rem; }
+        
+        .sidebar-menu { flex: 1; padding: 20px 0; overflow-y: auto; }
+        .sidebar-menu a { display: block; padding: 15px 25px; color: #cbd5e1; text-decoration: none; font-size: 1rem; border-left: 4px solid transparent; transition: all 0.2s; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background-color: #334155; color: white; border-left-color: #38bdf8; }
+        
+        .sidebar-footer { padding: 20px; border-top: 1px solid #334155; text-align: center; }
+        .btn-logout { background-color: #ef4444; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; }
+        
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .topbar { background-color: white; padding: 20px 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .topbar h1 { margin: 0; font-size: 1.5rem; color: #1e293b; }
+        .content-area { padding: 30px; }
+
+        /* Tarjetas de Estadísticas */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 5px solid #0284c7; }
+        .stat-card h3 { margin: 0 0 10px 0; font-size: 0.9rem; color: #64748b; text-transform: uppercase; }
+        .stat-card .value { font-size: 2rem; font-weight: bold; color: #0f172a; }
+
+        /* Layout del Dashboard Complejo */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Columna principal más ancha, columna secundaria más angosta */
+            gap: 25px;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-layout { grid-template-columns: 1fr; } /* Se apilan en pantallas pequeñas */
+        }
+
+        /* Paneles / Tablas */
+        .admin-panel { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 25px; }
+        .admin-panel-header { padding: 15px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; }
+        .admin-panel-header h3 { margin: 0; color: #1e293b; font-size: 1.1rem; }
+        
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table th, .admin-table td { padding: 12px 20px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
+        .admin-table th { background-color: white; color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; }
+        .admin-table tbody tr:hover { background-color: #f1f5f9; }
+
+        /* Badges de estado */
+        .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+        .status-confirmed { background-color: #dcfce7; color: #166534; }
+        .status-pending { background-color: #fef9c3; color: #854d0e; }
+        .status-cancelled { background-color: #fee2e2; color: #991b1b; }
+
+        /* Gráfico simulado */
+        .chart-placeholder { height: 200px; display: flex; align-items: flex-end; gap: 10px; padding: 20px; border-bottom: 1px solid #e2e8f0; }
+        .bar { flex: 1; background-color: #0284c7; border-radius: 4px 4px 0 0; transition: height 0.3s; opacity: 0.8; }
+        .bar:hover { opacity: 1; }
+
+        /* Lista simple */
+        .simple-list { list-style: none; padding: 0; margin: 0; }
+        .simple-list li { padding: 15px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .simple-list li:last-child { border-bottom: none; }
+        .list-title { font-weight: bold; color: #334155; font-size: 0.95rem; }
+        .list-subtitle { color: #64748b; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Tours PV</h2>
+            <span style="font-size: 0.8rem; color: #94a3b8;">Admin Panel</span>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="/admin/dashboard" class="active">Inicio (Dashboard)</a>
+            <a href="/admin/tours">Gestionar Tours (CU-06)</a>
+            <a href="/admin/yates">Gestionar Yates (CU-07)</a>
+            <a href="/admin/clientes">Directorio Clientes (CU-08)</a>
+            <a href="/admin/reservas">Reservaciones (CU-09)</a>
+            <a href="/admin/reportes">Reportes (CU-10)</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="btn-logout">Cerrar Sesión</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <h1>Panel General</h1>
+            <div>
+                <span style="color: #64748b; margin-right: 15px;">Hola, Admin</span>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=0284c7&color=fff" alt="Perfil" style="width: 35px; border-radius: 50%; vertical-align: middle;">
+            </div>
+        </header>
+
+        <div class="content-area">
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Ingresos del Mes</h3>
+                    <div class="value" style="color: #16a34a;">$142,500 <span style="font-size: 1rem; color: #64748b;">MXN</span></div>
+                </div>
+                <div class="stat-card" style="border-left-color: #10b981;">
+                    <h3>Reservas Activas</h3>
+                    <div class="value">45</div>
+                </div>
+                <div class="stat-card" style="border-left-color: #f59e0b;">
+                    <h3>Nuevos Clientes</h3>
+                    <div class="value">128</div>
+                </div>
+                <div class="stat-card" style="border-left-color: #8b5cf6;">
+                    <h3>Yates en Mantenimiento</h3>
+                    <div class="value" style="color: #ef4444;">1</div>
+                </div>
+            </div>
+
+            <div class="dashboard-layout">
+                
+                <div>
+                    <div class="admin-panel">
+                        <div class="admin-panel-header">
+                            <h3>Actividad de Reservas (Últimos 7 días)</h3>
+                        </div>
+                        <div class="chart-placeholder">
+                            <div class="bar" style="height: 40%;" title="Lunes: 12"></div>
+                            <div class="bar" style="height: 60%;" title="Martes: 18"></div>
+                            <div class="bar" style="height: 30%;" title="Miércoles: 9"></div>
+                            <div class="bar" style="height: 80%;" title="Jueves: 24"></div>
+                            <div class="bar" style="height: 100%; background-color: #38bdf8;" title="Viernes: 30"></div>
+                            <div class="bar" style="height: 90%;" title="Sábado: 27"></div>
+                            <div class="bar" style="height: 50%;" title="Domingo: 15"></div>
+                        </div>
+                    </div>
+
+                    <div class="admin-panel">
+                        <div class="admin-panel-header">
+                            <h3>Últimas Reservaciones Recibidas</h3>
+                            <button style="background: transparent; color: #0284c7; border: 1px solid #0284c7; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Ver Todas</button>
+                        </div>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Folio</th>
+                                    <th>Cliente</th>
+                                    <th>Servicio</th>
+                                    <th>Total</th>
+                                    <th>Estado Pago</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong style="color: #0284c7;">PV-A7X9V2</strong></td>
+                                    <td>Juan Pérez<br><span style="font-size: 0.8rem; color: #64748b;">322 123 4567</span></td>
+                                    <td>Yate Black Diamond<br><span style="font-size: 0.8rem; color: #64748b;">24 May 2026</span></td>
+                                    <td>$26,000</td>
+                                    <td><span class="status-badge status-confirmed">Pagado</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color: #0284c7;">PV-B4M2L1</strong></td>
+                                    <td>María González<br><span style="font-size: 0.8rem; color: #64748b;">55 9876 5432</span></td>
+                                    <td>Tour Islas Marietas<br><span style="font-size: 0.8rem; color: #64748b;">25 May 2026</span></td>
+                                    <td>$4,500</td>
+                                    <td><span class="status-badge status-pending">Pendiente</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color: #0284c7;">PV-K9L8P4</strong></td>
+                                    <td>Roberto Sánchez<br><span style="font-size: 0.8rem; color: #64748b;">81 2345 6789</span></td>
+                                    <td>Barco Pirata<br><span style="font-size: 0.8rem; color: #64748b;">25 May 2026</span></td>
+                                    <td>$8,400</td>
+                                    <td><span class="status-badge status-confirmed">Pagado</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color: #0284c7;">PV-X1Y2Z3</strong></td>
+                                    <td>Ana Lilia Flores<br><span style="font-size: 0.8rem; color: #64748b;">33 4455 6677</span></td>
+                                    <td>Velero Sea Breeze<br><span style="font-size: 0.8rem; color: #64748b;">22 May 2026</span></td>
+                                    <td>$14,000</td>
+                                    <td><span class="status-badge status-cancelled">Cancelado</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="admin-panel">
+                        <div class="admin-panel-header">
+                            <h3>Salidas de Yates (Hoy)</h3>
+                        </div>
+                        <ul class="simple-list">
+                            <li>
+                                <div>
+                                    <div class="list-title">Yate Happy Hour</div>
+                                    <div class="list-subtitle">10:00 AM - Muelle 4</div>
+                                </div>
+                                <span class="status-badge status-confirmed">A Tiempo</span>
+                            </li>
+                            <li>
+                                <div>
+                                    <div class="list-title">Black Diamond</div>
+                                    <div class="list-subtitle">02:00 PM - Muelle Principal</div>
+                                </div>
+                                <span class="status-badge status-pending">Preparando</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="admin-panel">
+                        <div class="admin-panel-header">
+                            <h3>Tours más Populares</h3>
+                        </div>
+                        <ul class="simple-list">
+                            <li>
+                                <div>
+                                    <div class="list-title">1. Islas Marietas</div>
+                                    <div class="list-subtitle">145 Reservas este mes</div>
+                                </div>
+                                <strong style="color: #10b981;">↑ 12%</strong>
+                            </li>
+                            <li>
+                                <div>
+                                    <div class="list-title">2. Los Arcos Snorkel</div>
+                                    <div class="list-subtitle">98 Reservas este mes</div>
+                                </div>
+                                <strong style="color: #10b981;">↑ 5%</strong>
+                            </li>
+                            <li>
+                                <div>
+                                    <div class="list-title">3. Barco Pirata</div>
+                                    <div class="list-subtitle">76 Reservas este mes</div>
+                                </div>
+                                <strong style="color: #ef4444;">↓ 2%</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div> </div>
+    </main>
+
+</body>
+</html>

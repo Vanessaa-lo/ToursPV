@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Yates | Admin Tours PV</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos del Layout Base */
+        body { margin: 0; background-color: #f3f4f6; display: flex; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .sidebar { width: 260px; background-color: #1e293b; color: white; display: flex; flex-direction: column; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
+        .sidebar-header { padding: 20px; background-color: #0f172a; text-align: center; border-bottom: 1px solid #334155; }
+        .sidebar-header h2 { margin: 0; color: #38bdf8; font-size: 1.5rem; }
+        
+        .sidebar-menu { flex: 1; padding: 20px 0; overflow-y: auto; }
+        .sidebar-menu a { display: block; padding: 15px 25px; color: #cbd5e1; text-decoration: none; font-size: 1rem; border-left: 4px solid transparent; transition: all 0.2s; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background-color: #334155; color: white; border-left-color: #38bdf8; }
+        
+        .sidebar-footer { padding: 20px; border-top: 1px solid #334155; text-align: center; }
+        .btn-logout { background-color: #ef4444; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; }
+        
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .topbar { background-color: white; padding: 20px 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .topbar h1 { margin: 0; font-size: 1.5rem; color: #1e293b; }
+        .content-area { padding: 30px; }
+
+        /* Layout CRUD */
+        .crud-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
+        @media (max-width: 1024px) { .crud-layout { grid-template-columns: 1fr; } }
+
+        /* Paneles y Tablas */
+        .admin-panel { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 25px; }
+        .admin-panel-header { padding: 15px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; }
+        .admin-panel-header h3 { margin: 0; color: #1e293b; font-size: 1.1rem; }
+        
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table th, .admin-table td { padding: 12px 20px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
+        .admin-table th { background-color: white; color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; }
+        .admin-table tbody tr:hover { background-color: #f1f5f9; }
+
+        /* Botones de Acción */
+        .btn-action { padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; margin-right: 5px; }
+        .btn-edit { background-color: #f59e0b; color: white; }
+        .btn-delete { background-color: #ef4444; color: white; }
+        
+        /* Badges de Estado */
+        .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+        .status-active { background-color: #dcfce7; color: #166534; }
+        .status-maintenance { background-color: #fee2e2; color: #991b1b; }
+        .status-inactive { background-color: #f1f5f9; color: #64748b; }
+
+        /* Formulario */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #475569; font-size: 0.85rem; }
+        input[type="text"], input[type="number"], select, textarea { 
+            width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem; 
+        }
+        input:focus, textarea:focus, select:focus { border-color: #0284c7; outline: none; }
+        .btn-save { background-color: #0284c7; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-save:hover { background-color: #0369a1; }
+        .btn-cancel { background-color: white; color: #64748b; border: 1px solid #cbd5e1; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-cancel:hover { background-color: #f8fafc; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Tours PV</h2>
+            <span style="font-size: 0.8rem; color: #94a3b8;">Admin Panel</span>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="/admin/dashboard">Inicio (Dashboard)</a>
+            <a href="/admin/tours">Gestionar Tours (CU-06)</a>
+            <a href="/admin/yates" class="active">Gestionar Yates (CU-07)</a>
+            <a href="/admin/clientes">Directorio Clientes (CU-08)</a>
+            <a href="/admin/reservas">Reservaciones (CU-09)</a>
+            <a href="/admin/reportes">Reportes (CU-10)</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="btn-logout">Cerrar Sesión</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <h1>Flota de Yates y Embarcaciones</h1>
+            <div>
+                <span style="color: #64748b; margin-right: 15px;">Hola, Admin</span>
+            </div>
+        </header>
+
+        <div class="content-area">
+            
+            <div class="crud-layout">
+                
+                <div class="admin-panel">
+                    <div class="admin-panel-header">
+                        <h3>Embarcaciones Registradas</h3>
+                        <span style="font-size: 0.85rem; color: #64748b;">Mostrando 3 resultados</span>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Embarcación</th>
+                                <th>Capacidad</th>
+                                <th>Eslora</th>
+                                <th>Precio / Hora</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background-color: #f0f9ff; border-left: 4px solid #0284c7;">
+                                <td><strong>#Y-01</strong></td>
+                                <td>Yate Black Diamond</td>
+                                <td>12 Personas</td>
+                                <td>48 Pies</td>
+                                <td>$6,500</td>
+                                <td><span class="status-badge status-active">Disponible</span></td>
+                                <td>
+                                    <button class="btn-action btn-edit">✎</button>
+                                    <button class="btn-action btn-delete">✕</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#Y-02</strong></td>
+                                <td>Yate Happy Hour</td>
+                                <td>10 Personas</td>
+                                <td>40 Pies</td>
+                                <td>$5,000</td>
+                                <td><span class="status-badge status-maintenance">En Mantenimiento</span></td>
+                                <td>
+                                    <button class="btn-action btn-edit">✎</button>
+                                    <button class="btn-action btn-delete">✕</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#Y-03</strong></td>
+                                <td>Velero Sea Breeze</td>
+                                <td>8 Personas</td>
+                                <td>36 Pies</td>
+                                <td>$3,500</td>
+                                <td><span class="status-badge status-active">Disponible</span></td>
+                                <td>
+                                    <button class="btn-action btn-edit">✎</button>
+                                    <button class="btn-action btn-delete">✕</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="admin-panel" style="padding: 20px; border-top: 4px solid #0284c7;">
+                    <h3 style="margin-top: 0; color: #1e293b; margin-bottom: 20px;">Editar: Yate Black Diamond</h3>
+                    
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <label for="nombre_yate">Nombre de la Embarcación *</label>
+                            <input type="text" id="nombre_yate" name="nombre_yate" value="Yate Black Diamond" required>
+                        </div>
+
+                        <div style="display: flex; gap: 10px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="capacidad">Capacidad (Pax) *</label>
+                                <input type="number" id="capacidad" name="capacidad" value="12" required>
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="eslora">Eslora (Pies) *</label>
+                                <input type="number" id="eslora" name="eslora" value="48" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="precio">Precio por Hora (MXN) *</label>
+                            <input type="number" id="precio" name="precio" value="6500" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcion">Descripción y Extras</label>
+                            <textarea id="descripcion" name="descripcion" rows="5">Yate de lujo ideal para eventos corporativos y atardeceres. Cuenta con 2 camarotes con aire acondicionado, 2 baños completos, amplio asoleadero en proa, sistema de sonido envolvente con conexión Bluetooth, equipo completo de snorkel y chalecos salvavidas para todos los pasajeros.</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estado">Estado Operativo</label>
+                            <select id="estado" name="estado">
+                                <option value="disponible" selected>Disponible (Activo)</option>
+                                <option value="mantenimiento">En Mantenimiento</option>
+                                <option value="inactivo">Inactivo (Fuera de servicio)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="imagen">URL de Imagen</label>
+                            <input type="text" id="imagen" name="imagen" value="/img/flota/black-diamond-ext.jpg">
+                        </div>
+
+                        <button type="submit" class="btn-save">Actualizar Embarcación</button>
+                        <button type="button" class="btn-cancel">Cancelar Edición</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>

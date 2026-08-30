@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Administración | Tours PV</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos específicos para darle color al Login Administrativo */
+        .login-admin-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Degradado tropical de fondo (Azul suave a blanco) */
+            background: linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%);
+        }
+        
+        .login-admin-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px; /* Bordes más suaves */
+            /* Sombra más pronunciada para dar efecto de elevación */
+            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.1); 
+            width: 100%;
+            max-width: 420px;
+            /* Borde superior con el color principal del sistema */
+            border-top: 6px solid #0284c7; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decoración sutil de fondo en la esquina */
+        .login-admin-box::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            background-color: #f0f9ff;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .login-admin-content {
+            position: relative;
+            z-index: 1; /* Para que el contenido esté sobre la decoración */
+        }
+
+        .login-admin-box h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: #0284c7; /* Título en azul */
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 800;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #6b7280;
+            font-size: 1rem;
+            margin-bottom: 32px;
+            display: block;
+        }
+
+        /* Estilización de los campos de entrada */
+        .admin-form-group label {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .admin-input {
+            border: 2px solid #e2e8f0 !important; /* Borde más notable */
+            transition: border-color 0.2s;
+        }
+
+        .admin-input:focus {
+            border-color: #38bdf8 !important; /* Azul cian al hacer foco */
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+            outline: none;
+        }
+
+        /* Botón con el color principal y efecto hover */
+        .btn-admin-submit {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(2, 132, 199, 0.2);
+        }
+
+        .btn-admin-submit:hover {
+            background-color: #0369a1;
+        }
+
+        .btn-admin-submit:active {
+            transform: translateY(1px); /* Efecto de presionado */
+        }
+
+        .back-to-site {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .back-to-site:hover {
+            color: #0284c7;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-admin-container">
+        <div class="login-admin-box">
+            <div class="login-admin-content">
+                <h2>Tours PV</h2>
+                <span class="login-subtitle">Panel de Control de Administración</span>
+                
+                <form action="/admin/login" method="POST">
+                    <div class="form-group admin-form-group">
+                        <label for="usuario">Usuario o Correo electrónico</label>
+                        <input type="text" id="usuario" name="usuario" class="admin-input" placeholder="nombre@ejemplo.com" required autocomplete="username">
+                    </div>
+
+                    <div class="form-group admin-form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" class="admin-input" placeholder="••••••••" required autocomplete="current-password">
+                    </div>
+
+                    <button type="submit" class="btn-admin-submit">Ingresar Seguramente</button>
+                </form>
+
+                <a href="/" class="back-to-site">← Volver al sitio web para clientes</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesar Pago Seguro | Tours PV</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos específicos para la Pasarela de Pago */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f3f4f6; }
+        
+        /* Header simplificado para checkout seguro */
+        .checkout-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .checkout-header h2 { margin: 0; color: #1e293b; font-size: 1.3rem; font-weight: 700; }
+        .btn-back { color: #6b7280; text-decoration: none; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 5px; }
+        .btn-back:hover { color: #1e293b; }
+
+        /* Contenedor del Layout de Pago */
+        .layout-container { max-width: 950px; margin: 40px auto; padding: 0 20px; display: flex; gap: 30px; flex-wrap: wrap; }
+        
+        /* Panel Izquierdo: Resumen de la Orden */
+        .info-col { flex: 1.2; min-width: 320px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #e5e7eb; height: fit-content; }
+        .info-col h3 { margin-top: 0; color: #1e293b; font-size: 1.25rem; margin-bottom: 20px; font-weight: 700; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+        
+        /* Ficha de Detalles del Servicio */
+        .resumen-ticket { background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
+        .resumen-item { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; color: #475569; }
+        .resumen-item strong { color: #1e293b; }
+        .resumen-item.total { border-top: 2px dashed #cbd5e1; margin-top: 15px; padding-top: 15px; font-size: 1.3rem; color: #0f172a; font-weight: 800; }
+        
+        /* Panel Derecho: Formulario de Pago */
+        .form-col { flex: 1; min-width: 320px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.04); height: fit-content; border-top: 5px solid #16a34a; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; }
+        .form-title { margin-top: 0; font-size: 1.3rem; color: #1e293b; font-weight: 700; margin-bottom: 5px; }
+        .form-subtitle { color: #6b7280; font-size: 0.85rem; margin-bottom: 25px; display: block; }
+        
+        /* Opciones de Método de Pago */
+        .metodo-pago-box { border: 2px solid #e2e8f0; padding: 18px; border-radius: 8px; margin-bottom: 15px; transition: border-color 0.2s; position: relative; }
+        .metodo-pago-box.active { border-color: #16a34a; background-color: #f0fdf4; }
+        .radio-label { display: flex; align-items: center; gap: 10px; font-weight: 600; color: #1e293b; cursor: pointer; font-size: 1rem; }
+        .radio-label input { cursor: pointer; margin: 0; }
+        
+        /* Inputs de Tarjeta */
+        .campos-tarjeta { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .input-checkout { width: 100%; padding: 11px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.95rem; background-color: white; }
+        .input-checkout:focus { border-color: #16a34a; outline: none; box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1); }
+        .fila-doble { display: flex; gap: 12px; }
+        .fila-doble .campo-mitad { flex: 1; }
+
+        /* Botón de Acción Principal */
+        .btn-pagar { background-color: #16a34a; color: white; border: none; padding: 14px; width: 100%; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 6px rgba(22, 163, 74, 0.15); transition: background-color 0.2s; }
+        .btn-pagar:hover { background-color: #15803d; }
+        
+        /* Garantía de Seguridad */
+        .seguridad-badge { display: flex; align-items: center; justify-content: center; gap: 8px; color: #64748b; font-size: 0.8rem; margin-top: 15px; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <header class="checkout-header">
+        <h2>Tours PV — Checkout Seguro</h2>
+        <a href="javascript:history.back()" class="btn-back">← Volver al servicio</a>
+    </header>
+
+    <div class="layout-container">
+        
+        <section class="info-col">
+            <h3>Resumen de tu Compra</h3>
+            
+            <div class="resumen-ticket">
+                <h4 style="margin: 0 0 15px 0; color: #0284c7; font-size: 1.2rem;">Yate Black Diamond</h4>
+                
+                <div class="resumen-item">
+                    <span>Fecha del Servicio:</span>
+                    <strong>15 de Octubre, 2026</strong>
+                </div>
+                <div class="resumen-item">
+                    <span>Duración de la Renta:</span>
+                    <strong>4 Horas</strong>
+                </div>
+                <div class="resumen-item">
+                    <span>Número de Asistentes:</span>
+                    <strong>8 Pasajeros</strong>
+                </div>
+                <div class="resumen-item">
+                    <span>Titular (Invitado):</span>
+                    <strong>Juan Pérez</strong>
+                </div>
+                <div class="resumen-item">
+                    <span>Correo de Contacto:</span>
+                    <strong>juan@ejemplo.com</strong>
+                </div>
+                
+                <div class="resumen-item total">
+                    <span>Total a Pagar:</span>
+                    <span>$26,000 MXN</span>
+                </div>
+            </div>
+            
+            <p style="font-size: 0.8rem; color: #64748b; line-height: 1.4; margin: 0;">
+                * Al completar el pago, nuestro sistema validará la disponibilidad inmediatamente y desplegará tu <strong>Código de Reservación Único</strong> en pantalla. También se te enviará una copia digital a tu correo electrónico.
+            </p>
+        </section>
+
+        <aside class="form-col">
+            <h2 class="form-title">Método de Pago</h2>
+            <span class="form-subtitle">Selecciona una de las opciones de pago seguro en línea.</span>
+            
+            <form action="#" method="POST">
+                <div class="metodo-pago-box active">
+                    <label class="radio-label" for="tarjeta">
+                        <input type="radio" id="tarjeta" name="metodo_pago" value="tarjeta" checked>
+                        Tarjeta de Crédito o Débito
+                    </label>
+                    
+                    <div class="campos-tarjeta">
+                        <div>
+                            <input type="text" class="input-checkout" placeholder="Número de Tarjeta (16 dígitos)" required autocomplete="cc-number">
+                        </div>
+                        <div>
+                            <input type="text" class="input-checkout" placeholder="Nombre impreso en la tarjeta" required autocomplete="cc-name">
+                        </div>
+                        <div class="fila-doble">
+                            <div class="campo-mitad">
+                                <input type="text" class="input-checkout" placeholder="MM/AA" required autocomplete="cc-exp">
+                            </div>
+                            <div class="campo-mitad">
+                                <input type="password" class="input-checkout" placeholder="CVC / CVV" maxlength="4" required autocomplete="cc-csc">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metodo-pago-box">
+                    <label class="radio-label" for="paypal">
+                        <input type="radio" id="paypal" name="metodo_pago" value="paypal">
+                        PayPal / Financiamiento
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-pagar">Pagar $26,000.00 MXN</button>
+                
+                <div class="seguridad-badge">
+                    <span>🔒 Conexión encriptada SSL de 256 bits</span>
+                </div>
+            </form>
+        </aside>
+        
+    </div>
+
+</body>
+</html>

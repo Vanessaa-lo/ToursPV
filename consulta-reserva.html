@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar mi Reserva | Tours PV</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos específicos para el Portal de Autogestión */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f3f4f6; }
+        
+        /* Contenedor de la interfaz */
+        .portal-container { display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 80px); padding: 20px; box-sizing: border-box; }
+        
+        /* Caja del formulario de búsqueda */
+        .portal-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); width: 100%; max-width: 450px; border: 1px solid #e5e7eb; }
+        .portal-box h2 { margin-top: 0; margin-bottom: 10px; color: #1e293b; text-align: center; font-size: 1.6rem; font-weight: 800; }
+        .portal-subtitle { text-align: center; color: #6b7280; font-size: 0.9rem; margin-bottom: 30px; display: block; line-height: 1.5; }
+        
+        /* Campos de Entrada */
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #475569; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .input-portal { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 1rem; background-color: #f8fafc; transition: all 0.2s; }
+        .input-portal:focus { background-color: white; border-color: #0284c7; outline: none; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
+        
+        /* Código de reserva resaltado */
+        .input-code { font-family: 'Courier New', Courier, monospace; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+        
+        /* Botón de envío */
+        .btn-portal { background-color: #0284c7; color: white; border: none; padding: 14px; width: 100%; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 6px rgba(2, 132, 199, 0.15); transition: background-color 0.2s; }
+        .btn-portal:hover { background-color: #0369a1; }
+        
+        /* Sección Informativa de Ayuda */
+        .ayuda-box { border-top: 1px solid #e5e7eb; margin-top: 30px; padding-top: 20px; }
+        .ayuda-box h4 { margin: 0 0 8px 0; color: #475569; font-size: 0.85rem; text-transform: uppercase; }
+        .ayuda-text { font-size: 0.85rem; color: #6b7280; line-height: 1.5; margin: 0; }
+        .ayuda-text strong { color: #1e293b; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo"><h2>Tours PV</h2></div>
+        <nav class="main-nav">
+            <a href="/">Inicio</a>
+            <a href="/tours">Tours</a>
+            <a href="/yates">Yates</a>
+            <a href="/mis-reservas" class="active">Consultar mi Reserva</a>
+        </nav>
+    </header>
+
+    <main class="portal-container">
+        <div class="portal-box">
+            <h2>Gestionar mi Reserva</h2>
+            <span class="portal-subtitle">Accede de forma segura para consultar itinerarios, realizar modificaciones de fecha, descargar comprobantes o solicitar cancelaciones.</span>
+            
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="codigo_reserva">Código de Reservación *</label>
+                    <input type="text" id="codigo_reserva" name="codigo" class="input-portal input-code" placeholder="Ej. PV-A7X9V2" maxlength="10" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="correo_electronico">Correo Electrónico *</label>
+                    <input type="email" id="correo_electronico" name="correo" class="input-portal" placeholder="juan@ejemplo.com" required autocomplete="email">
+                </div>
+
+                <button type="submit" class="btn-portal">Buscar Reservación</button>
+            </form>
+
+            <div class="ayuda-box">
+                <h4>¿Dónde encuentro mi código?</h4>
+                <p class="ayuda-text">
+                    El identificador alfanumérico único de 6 dígitos se generó de manera automática al confirmar tu transacción en la pantalla de éxito. Asimismo, se envió una copia a tu bandeja de entrada con el asunto <strong>"Confirmación de Reserva - Tours PV"</strong>. Si no lo visualizas, te sugerimos revisar la carpeta de correo no deseado (Spam).
+                </p>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

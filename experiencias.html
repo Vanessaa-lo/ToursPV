@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Experiencias | Tours PV</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos específicos para el Catálogo de Experiencias */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f9fafb; }
+        
+        /* Contenedor Principal */
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        
+        /* Encabezado de la Sección */
+        .header-seccion { text-align: center; margin-bottom: 35px; }
+        .header-seccion h1 { color: #1e293b; font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
+        .header-seccion p { color: #6b7280; font-size: 1.1rem; margin: 0; }
+        
+        /* Barra de Filtros y Búsqueda */
+        .barra-filtros { background: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 40px; display: flex; gap: 15px; justify-content: space-between; align-items: center; flex-wrap: wrap; border: 1px solid #e5e7eb; }
+        .grupo-filtro { display: flex; align-items: center; gap: 10px; }
+        .select-filtro { padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; background-color: white; font-size: 0.9rem; color: #475569; }
+        
+        /* Cuadrícula de Tarjetas (Grid) */
+        .grid-tours { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        
+        /* Estructura de la Tarjeta (Card) */
+        .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; position: relative; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08); }
+        
+        /* Contenedor de Imagen de Ejemplo */
+        .card-img-placeholder { background-color: #e2e8f0; height: 220px; display: flex; align-items: center; justify-content: center; color: #64748b; font-weight: bold; font-size: 1.1rem; position: relative; }
+        .badge-categoria { position: absolute; top: 15px; right: 15px; background-color: #0284c7; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+        
+        /* Cuerpo de la Tarjeta */
+        .card-body { padding: 25px; display: flex; flex-direction: column; flex: 1; }
+        .card-title { font-size: 1.3rem; font-weight: bold; margin: 0 0 10px 0; color: #1e293b; }
+        .card-desc { color: #6b7280; font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5; flex: 1; }
+        
+        /* Caja de Detalles Técnicos y Precio */
+        .meta-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+        .precio-tag { display: flex; flex-direction: column; }
+        .precio-label { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; font-weight: bold; }
+        .precio-valor { font-size: 1.4rem; color: #0284c7; font-weight: 800; }
+        .duracion-tag { font-size: 0.85rem; color: #475569; background-color: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-weight: 500; }
+        
+        /* Estado de Disponibilidad */
+        .disponibilidad-status { font-size: 0.85rem; color: #16a34a; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo"><h2>Tours PV</h2></div>
+        <nav class="main-nav">
+            <a href="/">Inicio</a>
+            <a href="/tours" class="active">Tours</a>
+            <a href="/yates">Yates</a>
+            <a href="/mis-reservas">Consultar mi Reserva</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="header-seccion">
+            <h1>Catálogo de Experiencias</h1>
+            <p>Explora actividades guiadas por expertos y vive aventuras inolvidables en la costa de Jalisco.</p>
+        </div>
+
+        <div class="barra-filtros">
+            <div class="grupo-filtro">
+                <label for="ordenar" style="font-size: 0.9rem; font-weight: 500; color: #475569;">Ordenar por:</label>
+                <select id="ordenar" class="select-filtro">
+                    <option value="populares">Más populares</option>
+                    <option value="precio-bajo">Precio: menor a mayor</option>
+                    <option value="precio-alto">Precio: mayor a menor</option>
+                </select>
+            </div>
+            <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">
+                Mostrando 3 experiencias disponibles
+            </div>
+        </div>
+
+        <div class="grid-tours">
+            
+            <div class="card">
+                <div class="card-img-placeholder">
+                    [Imagen Islas Marietas]
+                    <span class="badge-categoria">Naturaleza</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Playa Escondida en Islas Marietas</h3>
+                    <p class="card-desc">Santuario ecológico protegido en la Bahía de Banderas. Incluye equipo completo para hacer snorkel, paseo en kayak guiado y la oportunidad exclusiva de nadar hacia el interior de la icónica playa oculta en el cráter.</p>
+                    
+                    <div class="disponibilidad-status">
+                        ✔ Disponible todos los días
+                    </div>
+                    
+                    <div class="meta-box">
+                        <div class="precio-tag">
+                            <span class="precio-label">Precio por Pax</span>
+                            <span class="precio-valor">$1,500 MXN</span>
+                        </div>
+                        <span class="duracion-tag">⏱ 8 Horas</span>
+                    </div>
+                    
+                    <a href="/tours/1" class="btn-primary w-100">Ver Detalles y Reservar</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-placeholder">
+                    [Imagen Los Arcos]
+                    <span class="badge-categoria">Aventura</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Los Arcos, Ánimas y Quimixto</h3>
+                    <p class="card-desc">Exploración marina y terrestre completa. Realiza snorkel en los arrecifes vivos del parque nacional Los Arcos, relájate en la tranquilidad de Playa Las Ánimas y disfruta de una caminata guiada hacia la cascada tropical de Quimixto.</p>
+                    
+                    <div class="disponibilidad-status">
+                        ✔ Disponible todos los días
+                    </div>
+                    
+                    <div class="meta-box">
+                        <div class="precio-tag">
+                            <span class="precio-label">Precio por Pax</span>
+                            <span class="precio-valor">$1,200 MXN</span>
+                        </div>
+                        <span class="duracion-tag">⏱ 8 Horas</span>
+                    </div>
+                    
+                    <a href="/tours/2" class="btn-primary w-100">Ver Detalles y Reservar</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-placeholder">
+                    [Imagen Barco Pirata]
+                    <span class="badge-categoria">Nocturno</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Aventura Nocturna Barco Pirata</h3>
+                    <p class="card-desc">Un recorrido temático lleno de diversión bajo las estrellas. Disfruta de un espectacular show de piratas en vivo con acrobacias, cena gourmet a elegir a bordo, barra libre internacional y una exhibición de fuegos artificiales en el mar.</p>
+                    
+                    <div class="disponibilidad-status" style="color: #f59e0b;">
+                        ⚠ Últimos lugares disponibles
+                    </div>
+                    
+                    <div class="meta-box">
+                        <div class="precio-tag">
+                            <span class="precio-label">Precio por Pax</span>
+                            <span class="precio-valor">$2,100 MXN</span>
+                        </div>
+                        <span class="duracion-tag">⏱ 4 Horas</span>
+                    </div>
+                    
+                    <a href="/tours/3" class="btn-primary w-100">Ver Detalles y Reservar</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>

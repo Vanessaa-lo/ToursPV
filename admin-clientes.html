@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio de Clientes | Admin Tours PV</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos del Layout Base */
+        body { margin: 0; background-color: #f3f4f6; display: flex; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .sidebar { width: 260px; background-color: #1e293b; color: white; display: flex; flex-direction: column; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
+        .sidebar-header { padding: 20px; background-color: #0f172a; text-align: center; border-bottom: 1px solid #334155; }
+        .sidebar-header h2 { margin: 0; color: #38bdf8; font-size: 1.5rem; }
+        
+        .sidebar-menu { flex: 1; padding: 20px 0; overflow-y: auto; }
+        .sidebar-menu a { display: block; padding: 15px 25px; color: #cbd5e1; text-decoration: none; font-size: 1rem; border-left: 4px solid transparent; transition: all 0.2s; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background-color: #334155; color: white; border-left-color: #38bdf8; }
+        
+        .sidebar-footer { padding: 20px; border-top: 1px solid #334155; text-align: center; }
+        .btn-logout { background-color: #ef4444; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; }
+        
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .topbar { background-color: white; padding: 20px 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .topbar h1 { margin: 0; font-size: 1.5rem; color: #1e293b; }
+        .content-area { padding: 30px; }
+
+        /* Barra de búsqueda y herramientas */
+        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 15px; flex-wrap: wrap; }
+        .search-box { display: flex; gap: 10px; flex: 1; max-width: 400px; }
+        .search-input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; }
+        .btn-filter { background-color: white; color: #475569; border: 1px solid #cbd5e1; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 0.9rem; }
+        .btn-filter:hover { background-color: #f8fafc; }
+
+        /* Contenedor Principal de la Tabla */
+        .admin-panel { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; }
+        .admin-panel-header { padding: 15px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; }
+        .admin-panel-header h3 { margin: 0; color: #1e293b; font-size: 1.1rem; }
+        
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table th, .admin-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
+        .admin-table th { background-color: white; color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; }
+        .admin-table tbody tr:hover { background-color: #f1f5f9; }
+
+        /* Badges de clasificación de clientes */
+        .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; display: inline-block; }
+        .badge-frequent { background-color: #e0f2fe; color: #0369a1; }
+        .badge-regular { background-color: #dcfce7; color: #166534; }
+        .badge-new { background-color: #fef9c3; color: #854d0e; }
+
+        /* Botones de acción */
+        .btn-action { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; background-color: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; transition: all 0.2s; }
+        .btn-action:hover { background-color: #0284c7; color: white; border-color: #0284c7; }
+        
+        /* Paginación simulada */
+        .pagination { padding: 15px 20px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #64748b; }
+        .pagination-buttons { display: flex; gap: 5px; }
+        .page-link { padding: 5px 10px; border: 1px solid #cbd5e1; background: white; border-radius: 4px; text-decoration: none; color: #334155; }
+        .page-link.active { background-color: #0284c7; color: white; border-color: #0284c7; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Tours PV</h2>
+            <span style="font-size: 0.8rem; color: #94a3b8;">Admin Panel</span>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="/admin/dashboard">Inicio (Dashboard)</a>
+            <a href="/admin/tours">Gestionar Tours (CU-06)</a>
+            <a href="/admin/yates">Gestionar Yates (CU-07)</a>
+            <a href="/admin/clientes" class="active">Directorio Clientes (CU-08)</a>
+            <a href="/admin/reservas">Reservaciones (CU-09)</a>
+            <a href="/admin/reportes">Reportes (CU-10)</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="btn-logout">Cerrar Sesión</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <h1>Directorio de Clientes</h1>
+            <div>
+                <span style="color: #64748b; margin-right: 15px;">Hola, Admin</span>
+            </div>
+        </header>
+
+        <div class="content-area">
+            
+            <div class="toolbar">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Buscar por nombre, correo o teléfono..." value="Juan Pérez">
+                    <button class="btn-filter" style="background-color: #0284c7; color: white; border-color: #0284c7;">Buscar</button>
+                </div>
+                <div>
+                    <button class="btn-filter">⇅ Ordenar: A-Z</button>
+                    <button class="btn-filter">🖨 Exportar Lista</button>
+                </div>
+            </div>
+
+            <div class="admin-panel">
+                <div class="admin-panel-header">
+                    <h3>Base de Datos de Consumidores (Guest Checkout)</h3>
+                    <span style="font-size: 0.85rem; color: #64748b;">Mostrando 4 clientes registrados</span>
+                </div>
+                
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre Completo</th>
+                            <th>Contacto</th>
+                            <th>Reservas</th>
+                            <th>Tipo de Cliente</th>
+                            <th>Última Actividad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#C-104</strong></td>
+                            <td><strong>Juan Pérez</strong></td>
+                            <td>
+                                juan@ejemplo.com<br>
+                                <span style="font-size: 0.8rem; color: #64748b;">Tel: 322 123 4567</span>
+                            </td>
+                            <td>3 Reservas</td>
+                            <td><span class="status-badge badge-frequent">Cliente Frecuente</span></td>
+                            <td>Hoy, 04:32 PM</td>
+                            <td><button class="btn-action">Ver Historial</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#C-103</strong></td>
+                            <td><strong>María González</strong></td>
+                            <td>
+                                maria.gonzalez@gmail.com<br>
+                                <span style="font-size: 0.8rem; color: #64748b;">Tel: 55 9876 5432</span>
+                            </td>
+                            <td>1 Reserva</td>
+                            <td><span class="status-badge badge-regular">Regular</span></td>
+                            <td>Ayer, 11:20 AM</td>
+                            <td><button class="btn-action">Ver Historial</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#C-102</strong></td>
+                            <td><strong>Carlos Ruiz Castilo</strong></td>
+                            <td>
+                                carlos_ruiz@outlook.com<br>
+                                <span style="font-size: 0.8rem; color: #64748b;">Tel: 33 1122 3344</span>
+                            </td>
+                            <td>5 Reservas</td>
+                            <td><span class="status-badge badge-frequent">Cliente Frecuente</span></td>
+                            <td>20 May 2026</td>
+                            <td><button class="btn-action">Ver Historial</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#C-101</strong></td>
+                            <td><strong>Ana Lilia Flores</strong></td>
+                            <td>
+                                ana.flores@yahoo.com<br>
+                                <span style="font-size: 0.8rem; color: #64748b;">Tel: 81 5566 7788</span>
+                            </td>
+                            <td>1 Reserva</td>
+                            <td><span class="status-badge badge-new">Nuevo</span></td>
+                            <td>15 May 2026</td>
+                            <td><button class="btn-action">Ver Historial</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="pagination">
+                    <span>Mostrando registros del 1 al 4 de un total de 4 clientes</span>
+                    <div class="pagination-buttons">
+                        <a href="#" class="page-link">Anterior</a>
+                        <a href="#" class="page-link active">1</a>
+                        <a href="#" class="page-link">Siguiente</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
