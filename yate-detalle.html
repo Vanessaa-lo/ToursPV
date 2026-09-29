@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yate Black Diamond | Tours PV</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos base (mismos que home.html / yates.html) */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f9fafb; }
+        .btn-primary { background-color: #0284c7; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; border: none; cursor: pointer; font-size: 1rem; }
+        .btn-primary:disabled { background-color: #94a3b8; cursor: not-allowed; }
+
+        /* Navegación (igual que el resto del sitio) */
+        .main-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .main-nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; }
+        .main-nav a.active { color: #0284c7; font-weight: 700; }
+
+        /* Layout principal: detalle + formulario */
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .detalle-layout { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: start; }
+        @media (max-width: 900px) { .detalle-layout { grid-template-columns: 1fr; } }
+
+        .breadcrumb { font-size: 0.85rem; color: #64748b; margin-bottom: 20px; }
+        .breadcrumb a { color: #64748b; text-decoration: none; }
+        .breadcrumb a:hover { color: #0284c7; }
+
+        /* Columna de detalle */
+        .img-principal { background-color: #e2e8f0; height: 340px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #64748b; font-weight: bold; margin-bottom: 20px; }
+        .detalle-titulo { font-size: 1.9rem; font-weight: 800; color: #1e293b; margin: 0 0 8px 0; }
+        .detalle-precio-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+        .detalle-precio { font-size: 1.6rem; color: #0284c7; font-weight: 800; }
+        .detalle-precio-unidad { color: #64748b; font-size: 0.95rem; }
+        .badge-minimo { display: inline-block; background-color: #f1f5f9; color: #334155; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; margin-bottom: 18px; }
+
+        .disponibilidad-status { font-size: 0.9rem; color: #16a34a; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+        .disponibilidad-status.baja { color: #f59e0b; }
+
+        .detalle-desc { color: #475569; line-height: 1.6; margin-bottom: 25px; }
+
+        .specs-box { background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 20px 25px; }
+        .specs-box h3 { margin: 0 0 12px 0; font-size: 1rem; color: #1e293b; }
+        .specs-list { list-style: none; padding: 0; margin: 0; color: #475569; font-size: 0.9rem; line-height: 1.8; }
+        .specs-list strong { color: #0f172a; }
+
+        /* Columna del formulario */
+        .form-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 28px; position: sticky; top: 20px; }
+        .form-card h2 { margin: 0 0 4px 0; font-size: 1.3rem; color: #1e293b; }
+        .form-card .subtitle { color: #64748b; font-size: 0.85rem; display: block; margin-bottom: 20px; }
+
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: #334155; font-size: 0.85rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem; font-family: inherit;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #0284c7; outline: none; }
+        .form-group small.hint { display: block; margin-top: 4px; color: #64748b; font-size: 0.78rem; }
+        .fila-doble { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        .checkbox-row { display: flex; align-items: flex-start; gap: 8px; font-size: 0.82rem; color: #475569; margin-bottom: 18px; }
+        .checkbox-row input { margin-top: 3px; }
+
+        /* Desglose de precio dinámico */
+        .desglose-box { background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; }
+        .desglose-row { display: flex; justify-content: space-between; font-size: 0.85rem; color: #334155; padding: 3px 0; }
+        .desglose-row.total { border-top: 1px dashed #7dd3fc; margin-top: 6px; padding-top: 8px; font-weight: 700; color: #0284c7; }
+        .desglose-row.saldo { color: #b45309; }
+        .desglose-nota { font-size: 0.75rem; color: #64748b; margin-top: 8px; line-height: 1.4; }
+
+        .btn-reservar { width: 100%; padding: 14px; font-size: 1rem; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo"><h2>Tours PV</h2></div>
+        <nav class="main-nav">
+            <a href="/">Inicio</a>
+            <a href="/tours">Tours</a>
+            <a href="/yates" class="active">Yates</a>
+            <a href="/mis-reservas">Consultar mi Reserva</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumb">
+            <a href="/">Inicio</a> / <a href="/yates">Yates</a> / Yate Black Diamond
+        </div>
+
+        <div class="detalle-layout">
+
+            <!-- Columna izquierda: detalle del yate -->
+            <section>
+                <div class="img-principal">[Imagen Yate Black Diamond]</div>
+
+                <h1 class="detalle-titulo">Yate Black Diamond</h1>
+                <div class="detalle-precio-row">
+                    <span class="detalle-precio">$6,500 MXN</span>
+                    <span class="detalle-precio-unidad">/ hora</span>
+                </div>
+                <span class="badge-minimo">⏱ Mínimo de renta: 4 horas</span>
+
+                <div class="disponibilidad-status">
+                    ✔ Disponible para la fecha seleccionada
+                </div>
+
+                <p class="detalle-desc">
+                    Yate de lujo ideal para eventos corporativos y atardeceres. Cuenta con 2 camarotes con
+                    aire acondicionado, 2 baños completos, amplio asoleadero en proa, sistema de sonido
+                    envolvente con conexión Bluetooth, equipo completo de snorkel y chalecos salvavidas
+                    para todos los pasajeros.
+                </p>
+
+                <div class="specs-box">
+                    <h3>Especificaciones</h3>
+                    <ul class="specs-list">
+                        <li>• <strong>Capacidad:</strong> 12 Personas</li>
+                        <li>• <strong>Eslora:</strong> 48 Pies</li>
+                        <li>• <strong>Tripulación:</strong> Capitán y 2 Marineros</li>
+                        <li>• <strong>Comodidades:</strong> 2 Camarotes c/ Aire Acondicionado</li>
+                        <li>• <strong>Mínimo de renta:</strong> 4 Horas</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Columna derecha: formulario de reservación -->
+            <aside class="form-card">
+                <h2>Datos de Reservación</h2>
+                <span class="subtitle">Sin necesidad de crear una cuenta.</span>
+
+                <form action="/reservas" method="POST" id="form-reserva">
+
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo *</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" required>
+                    </div>
+
+                    <div class="fila-doble">
+                        <div class="form-group">
+                            <label for="correo">Correo electrónico *</label>
+                            <input type="email" id="correo" name="correo" placeholder="juan@ejemplo.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono *</label>
+                            <input type="tel" id="telefono" name="telefono" placeholder="322 123 4567" required>
+                        </div>
+                    </div>
+
+                    <div class="fila-doble">
+                        <div class="form-group">
+                            <label for="fecha">Fecha deseada *</label>
+                            <input type="date" id="fecha" name="fecha" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="hora">Hora de salida *</label>
+                            <input type="time" id="hora" name="hora" required>
+                        </div>
+                    </div>
+
+                    <div class="fila-doble">
+                        <div class="form-group">
+                            <label for="horas">Número de horas *</label>
+                            <input type="number" id="horas" name="horas" min="4" value="4" required>
+                            <small class="hint">Mínimo 4 horas para este yate.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="personas">Número de personas *</label>
+                            <input type="number" id="personas" name="personas" min="1" max="12" value="1" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comentarios">Comentarios adicionales</label>
+                        <textarea id="comentarios" name="comentarios" rows="2" placeholder="Ej. Solicito chalecos para niños."></textarea>
+                    </div>
+
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="promociones" name="acepta_promociones">
+                        <label for="promociones" style="margin: 0; font-weight: 400;">Deseo recibir actualizaciones de promociones y novedades.</label>
+                    </div>
+
+                    <div class="desglose-box">
+                        <div class="desglose-row">
+                            <span>Total del Servicio:</span>
+                            <span id="desglose-total">$26,000 MXN</span>
+                        </div>
+                        <div class="desglose-row total">
+                            <span>Anticipo a Pagar Ahora (50%):</span>
+                            <span id="desglose-anticipo">$13,000 MXN</span>
+                        </div>
+                        <div class="desglose-row saldo">
+                            <span>Saldo Pendiente:</span>
+                            <span id="desglose-saldo">$13,000 MXN</span>
+                        </div>
+                        <p class="desglose-nota">
+                            * El saldo se liquida en efectivo o transferencia el día del servicio. El
+                            cálculo se actualiza según el número de horas seleccionado.
+                        </p>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-reservar">Continuar al Pago del Anticipo</button>
+                </form>
+            </aside>
+
+        </div>
+    </main>
+
+    <footer style="background-color: #1f2937; color: white; padding: 40px 50px; text-align: center; margin-top: 50px;">
+        <div style="margin-bottom: 20px;">
+            <h3>Tours PV</h3>
+            <p>Puerto Vallarta, Jalisco, México</p>
+        </div>
+        <p>&copy; 2026 Tours PV. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Recalcula el desglose de anticipo/saldo cuando cambia el número de horas.
+        // En Laravel esto se recalculará también en el servidor antes de crear la reserva.
+        const PRECIO_POR_HORA = 6500;
+        const inputHoras = document.getElementById('horas');
+        const elTotal = document.getElementById('desglose-total');
+        const elAnticipo = document.getElementById('desglose-anticipo');
+        const elSaldo = document.getElementById('desglose-saldo');
+
+        function formatoMXN(valor) {
+            return '$' + valor.toLocaleString('es-MX') + ' MXN';
+        }
+
+        function actualizarDesglose() {
+            const horas = parseInt(inputHoras.value, 10) || 0;
+            const total = horas * PRECIO_POR_HORA;
+            const anticipo = total / 2;
+            const saldo = total - anticipo;
+            elTotal.textContent = formatoMXN(total);
+            elAnticipo.textContent = formatoMXN(anticipo);
+            elSaldo.textContent = formatoMXN(saldo);
+        }
+
+        inputHoras.addEventListener('input', actualizarDesglose);
+        actualizarDesglose();
+    </script>
+
+</body>
+</html>
