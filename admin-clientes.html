@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Directorio de Clientes | Admin Tours PV</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="css/app.css">
     <style>
         /* Estilos del Layout Base */
         body { margin: 0; background-color: #f3f4f6; display: flex; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -46,6 +46,7 @@
         .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; display: inline-block; }
         .badge-frequent { background-color: #e0f2fe; color: #0369a1; }
         .badge-regular { background-color: #dcfce7; color: #166534; }
+        .badge-none { background-color: #f1f5f9; color: #64748b; }
         .badge-new { background-color: #fef9c3; color: #854d0e; }
 
         /* Botones de acción */
@@ -73,6 +74,7 @@
             <a href="/admin/yates">Gestionar Yates (CU-07)</a>
             <a href="/admin/clientes" class="active">Directorio Clientes (CU-08)</a>
             <a href="/admin/reservas">Reservaciones (CU-09)</a>
+            <a href="/admin/pagos">Pagos</a>
             <a href="/admin/reportes">Reportes (CU-10)</a>
         </nav>
 
@@ -97,7 +99,12 @@
                     <button class="btn-filter" style="background-color: #0284c7; color: white; border-color: #0284c7;">Buscar</button>
                 </div>
                 <div>
+                    <select class="btn-filter" aria-label="Filtrar por promociones">
+                        <option>Todos los clientes</option>
+                        <option>Solo suscritos a promociones</option>
+                    </select>
                     <button class="btn-filter">⇅ Ordenar: A-Z</button>
+                    <a href="#enviar-promocion" class="btn-filter" style="text-decoration: none; display: inline-block;">✉ Enviar promoción</a>
                     <button class="btn-filter">🖨 Exportar Lista</button>
                 </div>
             </div>
@@ -116,6 +123,7 @@
                             <th>Contacto</th>
                             <th>Reservas</th>
                             <th>Tipo de Cliente</th>
+                            <th>Promociones</th>
                             <th>Última Actividad</th>
                             <th>Acciones</th>
                         </tr>
@@ -130,6 +138,7 @@
                             </td>
                             <td>3 Reservas</td>
                             <td><span class="status-badge badge-frequent">Cliente Frecuente</span></td>
+                            <td><span class="status-badge badge-regular">Suscrito</span></td>
                             <td>Hoy, 04:32 PM</td>
                             <td><button class="btn-action">Ver Historial</button></td>
                         </tr>
@@ -142,6 +151,7 @@
                             </td>
                             <td>1 Reserva</td>
                             <td><span class="status-badge badge-regular">Regular</span></td>
+                            <td><span class="status-badge badge-none">No</span></td>
                             <td>Ayer, 11:20 AM</td>
                             <td><button class="btn-action">Ver Historial</button></td>
                         </tr>
@@ -154,6 +164,7 @@
                             </td>
                             <td>5 Reservas</td>
                             <td><span class="status-badge badge-frequent">Cliente Frecuente</span></td>
+                            <td><span class="status-badge badge-regular">Suscrito</span></td>
                             <td>20 May 2026</td>
                             <td><button class="btn-action">Ver Historial</button></td>
                         </tr>
@@ -166,6 +177,7 @@
                             </td>
                             <td>1 Reserva</td>
                             <td><span class="status-badge badge-new">Nuevo</span></td>
+                            <td><span class="status-badge badge-none">No</span></td>
                             <td>15 May 2026</td>
                             <td><button class="btn-action">Ver Historial</button></td>
                         </tr>
@@ -181,6 +193,22 @@
                     </div>
                 </div>
             </div>
+
+            <details id="enviar-promocion" class="admin-panel" style="margin-top: 25px;">
+                <summary class="admin-panel-header" style="cursor: pointer;"><h3>Enviar promoción a clientes suscritos</h3></summary>
+                <form action="/admin/clientes/promociones" method="POST" style="padding: 20px; display: grid; gap: 14px; max-width: 640px;">
+                    <div>
+                        <label for="asunto" style="display: block; font-weight: 600; font-size: 0.85rem; color: #475569; margin-bottom: 5px;">Asunto *</label>
+                        <input type="text" id="asunto" name="asunto" required placeholder="Ej. 15 % de descuento en renta de yates entre semana" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
+                    </div>
+                    <div>
+                        <label for="mensaje" style="display: block; font-weight: 600; font-size: 0.85rem; color: #475569; margin-bottom: 5px;">Mensaje *</label>
+                        <textarea id="mensaje" name="mensaje" rows="4" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-family: inherit;"></textarea>
+                    </div>
+                    <p style="margin: 0; font-size: 0.85rem; color: #64748b;">Se enviará solo a los clientes con <strong>promociones aceptadas</strong> (2 de 4 clientes).</p>
+                    <div><button type="submit" class="btn-filter" style="background-color: #0284c7; color: white; border-color: #0284c7;">Enviar promoción</button></div>
+                </form>
+            </details>
 
         </div>
     </main>

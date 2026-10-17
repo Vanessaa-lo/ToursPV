@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprobante PV-A7X9V2 | Tours PV</title>
+    <style>
+        @page { size: A4; margin: 16mm; }
+        body { margin: 0; background: #e5e7eb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1e293b; }
+        .toolbar { max-width: 820px; margin: 20px auto 0; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .toolbar a { color: #64748b; text-decoration: none; font-size: 0.9rem; }
+        .btn-print { background: #0284c7; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.95rem; }
+        .sheet { max-width: 820px; margin: 16px auto 40px; background: #fff; padding: 44px 48px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+        .head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 4px solid #0284c7; padding-bottom: 18px; margin-bottom: 24px; }
+        .brand h1 { margin: 0; font-size: 1.8rem; color: #0284c7; }
+        .brand p { margin: 4px 0 0; color: #64748b; font-size: 0.85rem; }
+        .folio { text-align: right; }
+        .folio .label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; font-weight: 700; }
+        .folio .code { font-size: 1.5rem; font-weight: 800; font-family: Consolas, 'Courier New', monospace; letter-spacing: 2px; }
+        h2 { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; color: #475569; margin: 24px 0 8px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 32px; font-size: 0.92rem; }
+        .grid div span { color: #64748b; display: block; font-size: 0.78rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        th { text-align: left; background: #f1f5f9; padding: 10px 12px; font-size: 0.78rem; text-transform: uppercase; color: #475569; }
+        td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; }
+        td.num, th.num { text-align: right; }
+        .pagado { color: #166534; font-weight: 700; }
+        .pendiente { color: #b45309; font-weight: 700; }
+        .totales { margin-top: 14px; margin-left: auto; width: 320px; font-size: 0.95rem; }
+        .totales div { display: flex; justify-content: space-between; padding: 6px 0; }
+        .totales .grande { border-top: 2px solid #1e293b; margin-top: 4px; padding-top: 10px; font-weight: 800; font-size: 1.05rem; }
+        .nota { margin-top: 28px; font-size: 0.82rem; color: #64748b; line-height: 1.5; border-top: 1px dashed #cbd5e1; padding-top: 14px; }
+        @media print {
+            body { background: #fff; }
+            .toolbar { display: none; }
+            .sheet { box-shadow: none; margin: 0; padding: 0; max-width: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <a href="/mis-reservas">← Volver a mi reservación</a>
+        <button type="button" class="btn-print" onclick="window.print()">Imprimir / Guardar PDF</button>
+    </div>
+
+    <main class="sheet">
+        <div class="head">
+            <div class="brand">
+                <h1>Tours PV</h1>
+                <p>Comprobante de reservación y pago<br>Puerto Vallarta, Jalisco, México</p>
+            </div>
+            <div class="folio">
+                <div class="label">Código de reservación</div>
+                <div class="code">PV-A7X9V2</div>
+                <div style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">Emitido: 14 de octubre de 2026</div>
+            </div>
+        </div>
+
+        <h2>Cliente</h2>
+        <div class="grid">
+            <div><span>Nombre</span>Juan Pérez</div>
+            <div><span>Correo electrónico</span>juan@ejemplo.com</div>
+            <div><span>Teléfono</span>322 123 4567</div>
+        </div>
+
+        <h2>Servicio contratado</h2>
+        <div class="grid">
+            <div><span>Servicio</span>Yate Black Diamond</div>
+            <div><span>Fecha</span>15 de octubre de 2026</div>
+            <div><span>Hora de salida</span>09:30 AM</div>
+            <div><span>Duración</span>4 horas</div>
+            <div><span>Pasajeros</span>8 personas</div>
+        </div>
+
+        <h2>Detalle de pagos</h2>
+        <table>
+            <thead>
+                <tr><th>Concepto</th><th>Método</th><th>Referencia</th><th>Estado</th><th class="num">Monto</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Anticipo (50 %)</td><td>Stripe</td><td>pi_XXXXXXXXXX</td><td class="pagado">Pagado</td><td class="num">$13,000.00</td></tr>
+                <tr><td>Saldo restante (50 %)</td><td>Efectivo o transferencia</td><td>—</td><td class="pendiente">Pendiente</td><td class="num">$13,000.00</td></tr>
+            </tbody>
+        </table>
+
+        <div class="totales">
+            <div><span>Total del servicio</span><span>$26,000.00 MXN</span></div>
+            <div><span>Pagado a la fecha</span><span class="pagado">$13,000.00 MXN</span></div>
+            <div class="grande"><span>Saldo pendiente</span><span>$13,000.00 MXN</span></div>
+        </div>
+
+        <p class="nota">
+            Este comprobante acredita el pago del anticipo y el detalle de la reservación. El saldo pendiente
+            se liquida el día del servicio en efectivo o transferencia y se registrará en el sistema al recibirse.
+            Conserva tu código de reservación y presenta este documento el día del servicio.
+        </p>
+    </main>
+
+</body>
+</html>

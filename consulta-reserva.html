@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultar mi Reserva | Tours PV</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos compartidos (los mismos de css/app.css; al pasar a Laravel van en el layout) */
+        .main-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .main-header .logo h2 { margin: 0; }
+        .main-nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; }
+        .main-nav a:hover { color: #0284c7; }
+        .main-nav a.active { color: #0284c7; font-weight: 700; }
+    </style>
     <style>
         /* Estilos específicos para el Portal de Autogestión */
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f3f4f6; }
@@ -54,7 +61,7 @@
             <h2>Gestionar mi Reserva</h2>
             <span class="portal-subtitle">Accede de forma segura para consultar itinerarios, realizar modificaciones de fecha, descargar comprobantes o solicitar cancelaciones.</span>
             
-            <form action="#" method="POST">
+            <form action="/mis-reservas" method="POST">
                 <div class="form-group">
                     <label for="codigo_reserva">Código de Reservación *</label>
                     <input type="text" id="codigo_reserva" name="codigo" class="input-portal input-code" placeholder="Ej. PV-A7X9V2" maxlength="10" required>
@@ -71,7 +78,7 @@
             <div class="ayuda-box">
                 <h4>¿Dónde encuentro mi código?</h4>
                 <p class="ayuda-text">
-                    El identificador alfanumérico único de 6 dígitos se generó de manera automática al confirmar tu transacción en la pantalla de éxito. Asimismo, se envió una copia a tu bandeja de entrada con el asunto <strong>"Confirmación de Reserva - Tours PV"</strong>. Si no lo visualizas, te sugerimos revisar la carpeta de correo no deseado (Spam).
+                    El código de reservación (formato PV-XXXXXX) se generó de manera automática al confirmar tu transacción en la pantalla de éxito. Asimismo, se envió una copia a tu bandeja de entrada con el asunto <strong>"Confirmación de Reserva - Tours PV"</strong>. Si no lo visualizas, te sugerimos revisar la carpeta de correo no deseado (Spam).
                 </p>
             </div>
         </div>

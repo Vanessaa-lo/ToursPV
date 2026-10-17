@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tours PV | Vive la mejor experiencia en Puerto Vallarta</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos compartidos (los mismos de css/app.css; al pasar a Laravel van en el layout) */
+        .main-header .logo h2 { margin: 0; }
+        .btn-primary { background-color: #0284c7; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; text-align: center; border: none; cursor: pointer; }
+        .btn-primary:hover { background-color: #0369a1; }
+        .btn-secondary { background-color: #22c55e; color: #fff; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
+    </style>
     <style>
         /* Estilos base de demostración */
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; }
@@ -83,8 +89,8 @@
                     <img src="/img/yate-black-diamond.jpg" alt="Yate Black Diamond">
                     <div class="card-body">
                         <h3>Yate Black Diamond</h3>
-                        <p><strong>Capacidad:</strong> 10 Personas<br><strong>Tamaño:</strong> 45 Pies</p>
-                        <span class="precio">$3,000 MXN / Hora</span>
+                        <p><strong>Capacidad:</strong> 12 Personas<br><strong>Tamaño:</strong> 48 Pies</p>
+                        <span class="precio">$6,500 MXN / Hora</span>
                         <span class="disponibilidad">✔ Disponible hoy</span>
                         <a href="/yates/black-diamond" class="btn-primary" style="display: block; text-align: center; margin-top: 10px;">Ver Yate</a>
                     </div>

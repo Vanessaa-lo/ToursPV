@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playa Escondida en Islas Marietas | Tours PV</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos compartidos (los mismos de css/app.css; al pasar a Laravel van en el layout) */
+        .main-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .main-header .logo h2 { margin: 0; }
+        .main-nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; }
+        .main-nav a:hover { color: #0284c7; }
+        .main-nav a.active { color: #0284c7; font-weight: 700; }
+        .btn-primary { background-color: #0284c7; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; text-align: center; border: none; cursor: pointer; }
+        .btn-primary:hover { background-color: #0369a1; }
+        .flow-icon.warn { background: #fef3c7; color: #d97706; }
+        .summary-row.saldo strong { color: #b45309; }
+        .btn-outline { background: #fff; color: #0284c7; border: 2px solid #0284c7; padding: 9px 18px; border-radius: 5px; font-weight: bold; text-decoration: none; display: inline-block; cursor: pointer; font-size: 0.95rem; }
+        .btn-outline:hover { background: #f0f9ff; }
+        .alert { border-radius: 8px; padding: 12px 16px; font-size: 0.9rem; line-height: 1.45; }
+        .alert.info { background: #f0f9ff; border: 1px solid #bae6fd; color: #0c4a6e; }
+        .alert.warn { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+        .alert.err { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+        .disp-resultado { margin: 4px 0 16px; }
+    </style>
     <style>
         /* Estilos base (mismos que home.html / experiencias.html) */
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f9fafb; }
@@ -26,8 +44,16 @@
         .breadcrumb a:hover { color: #0284c7; }
 
         /* Columna de detalle */
-        .img-principal { background-color: #e2e8f0; height: 340px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #64748b; font-weight: bold; margin-bottom: 20px; position: relative; }
         .badge-categoria { position: absolute; top: 15px; right: 15px; background-color: #0284c7; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+
+        /* Galería de fotos */
+        .galeria-principal { position: relative; background-color: #e2e8f0; height: 340px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #64748b; font-weight: bold; overflow: hidden; }
+        .galeria-principal img { width: 100%; height: 100%; object-fit: cover; }
+        .galeria-contador { position: absolute; bottom: 12px; right: 12px; background: rgba(15, 23, 42, 0.7); color: #fff; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
+        .galeria-miniaturas { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0 20px; }
+        .miniatura { width: 96px; height: 68px; padding: 0; border: 3px solid transparent; border-radius: 8px; background-color: #e2e8f0; color: #64748b; font-weight: bold; cursor: pointer; overflow: hidden; }
+        .miniatura img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .miniatura.activa { border-color: #0284c7; }
 
         .detalle-titulo { font-size: 1.9rem; font-weight: 800; color: #1e293b; margin: 0 0 8px 0; }
         .detalle-precio-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
@@ -69,6 +95,7 @@
         .desglose-row.saldo { color: #b45309; }
         .desglose-nota { font-size: 0.75rem; color: #64748b; margin-top: 8px; line-height: 1.4; }
 
+        .btn-sm { padding: 6px 12px; font-size: 0.85rem; margin: 8px 6px 0 0; }
         .btn-reservar { width: 100%; padding: 14px; font-size: 1rem; }
     </style>
 </head>
@@ -93,9 +120,20 @@
 
             <!-- Columna izquierda: detalle del tour -->
             <section>
-                <div class="img-principal">
-                    [Imagen Islas Marietas]
-                    <span class="badge-categoria">Naturaleza</span>
+                <div class="galeria" aria-label="Galería de fotos">
+                    <div class="galeria-principal">
+                        <img id="galeria-img" alt="" hidden>
+                        <span id="galeria-texto">[Foto 1]</span>
+                        <span class="badge-categoria">Naturaleza</span>
+                        <span class="galeria-contador" id="galeria-contador">1 / 4</span>
+                    </div>
+                    <!-- En Laravel: un botón por imagen con data-src="{{ $imagen->url }}" y <img src="{{ $imagen->url }}"> dentro. -->
+                    <div class="galeria-miniaturas">
+                        <button type="button" class="miniatura" data-src="" data-label="Playa Escondida" aria-label="Ver foto 1: Playa Escondida">1</button>
+                        <button type="button" class="miniatura" data-src="" data-label="Snorkel" aria-label="Ver foto 2: Snorkel">2</button>
+                        <button type="button" class="miniatura" data-src="" data-label="Kayak" aria-label="Ver foto 3: Kayak">3</button>
+                        <button type="button" class="miniatura" data-src="" data-label="Grupo de visitantes" aria-label="Ver foto 4: Grupo de visitantes">4</button>
+                    </div>
                 </div>
 
                 <h1 class="detalle-titulo">Playa Escondida en Islas Marietas</h1>
@@ -105,9 +143,7 @@
                 </div>
                 <span class="badge-duracion">⏱ Duración: 8 horas</span>
 
-                <div class="disponibilidad-status">
-                    ✔ Disponible para la fecha seleccionada
-                </div>
+                <div class="disponibilidad-status" id="estado-disp" style="color: #64748b;">Elige fecha y horario para consultar la disponibilidad</div>
 
                 <p class="detalle-desc">
                     Santuario ecológico protegido en la Bahía de Banderas. Incluye equipo completo para
@@ -130,6 +166,13 @@
             <aside class="form-card">
                 <h2>Datos de Reservación</h2>
                 <span class="subtitle">Sin necesidad de crear una cuenta.</span>
+
+                <div class="alert err" id="aviso-no-disponible" role="alert" hidden>
+                    <strong>Ese horario ya no tiene lugares disponibles.</strong> No se realizó ningún cargo y tus datos se conservaron.
+                    <div>Otras salidas ese día:
+                        <button type="button" class="btn-outline btn-sm" data-hora="09:30">9:30 AM</button>
+                    </div>
+                </div>
 
                 <form action="/reservas" method="POST" id="form-reserva">
 
@@ -168,6 +211,9 @@
                         <label for="personas">Número de personas *</label>
                         <input type="number" id="personas" name="personas" min="1" value="1" required>
                     </div>
+
+                    <button type="button" class="btn-outline" id="btn-disponibilidad" style="width: 100%; margin-bottom: 12px;">Verificar disponibilidad</button>
+                    <div id="disp-resultado" class="disp-resultado" role="status" aria-live="polite"></div>
 
                     <div class="form-group">
                         <label for="comentarios">Comentarios adicionales</label>
@@ -238,6 +284,73 @@
 
         inputPersonas.addEventListener('input', actualizarDesglose);
         actualizarDesglose();
+    </script>
+
+    <script>
+        // Consulta de disponibilidad por fecha y horario (alcance: "Consulta de disponibilidad").
+        // DEMO: en Laravel este botón llama al servidor, que valida traslapes y cupo.
+        (function () {
+            var fecha = document.getElementById('fecha'), hora = document.getElementById('hora');
+            var hoy = new Date(); hoy.setMinutes(hoy.getMinutes() - hoy.getTimezoneOffset());
+            fecha.min = hoy.toISOString().split('T')[0];   // no permite fechas pasadas
+            document.getElementById('btn-disponibilidad').addEventListener('click', function () {
+                var box = document.getElementById('disp-resultado'), estado = document.getElementById('estado-disp');
+                if (!fecha.value || !hora.value) {
+                    box.innerHTML = '<div class="alert warn">Selecciona la fecha y el horario de salida para consultar la disponibilidad.</div>';
+                    return;
+                }
+                var etiqueta = hora.options[hora.selectedIndex].text;
+                box.innerHTML = '<div class="alert info">✔ Salida disponible: ' + fecha.value + ', ' + etiqueta + '.</div>';
+                estado.textContent = '✔ Disponible el ' + fecha.value + ' a las ' + etiqueta;
+                estado.style.color = '#16a34a';
+            });
+        })();
+    </script>
+
+    <script>
+        // Galería: al elegir una miniatura se muestra la foto en grande.
+        (function () {
+            var miniaturas = document.querySelectorAll('.miniatura');
+            var principal = document.getElementById('galeria-img');
+            var texto = document.getElementById('galeria-texto');
+            var contador = document.getElementById('galeria-contador');
+            function mostrar(i) {
+                var b = miniaturas[i];
+                miniaturas.forEach(function (m) { m.classList.remove('activa'); m.removeAttribute('aria-current'); });
+                b.classList.add('activa');
+                b.setAttribute('aria-current', 'true');
+                var src = b.getAttribute('data-src');
+                if (src) {
+                    principal.src = src;
+                    principal.alt = b.getAttribute('data-label');
+                    principal.hidden = false;
+                    texto.hidden = true;
+                } else {
+                    principal.hidden = true;
+                    texto.hidden = false;
+                    texto.textContent = '[' + b.getAttribute('data-label') + ']';
+                }
+                contador.textContent = (i + 1) + ' / ' + miniaturas.length;
+            }
+            miniaturas.forEach(function (b, i) { b.addEventListener('click', function () { mostrar(i); }); });
+            if (miniaturas.length) mostrar(0);
+        })();
+    </script>
+
+    <script>
+        // Aviso de horario no disponible (RF-9, TS-06). Vista previa: abre esta página con ?demo=no-disponible
+        // En Laravel se muestra con: @if ($errors->has('disponibilidad')) ... @endif
+        (function () {
+            var aviso = document.getElementById('aviso-no-disponible');
+            if (!aviso) return;
+            if (location.search.indexOf('demo=no-disponible') !== -1) aviso.hidden = false;
+            Array.prototype.forEach.call(aviso.querySelectorAll('[data-hora]'), function (b) {
+                b.addEventListener('click', function () {
+                    document.getElementById('hora').value = b.getAttribute('data-hora');
+                    aviso.hidden = true;
+                });
+            });
+        })();
     </script>
 
 </body>

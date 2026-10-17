@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva confirmada | Tours PV</title>
+    <style>
+        /* Estilos compartidos (los mismos de css/app.css; al pasar a Laravel van en el layout) */
+        .main-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .main-header .logo h2 { margin: 0; }
+        .main-nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; }
+        .main-nav a:hover { color: #0284c7; }
+        .main-nav a.active { color: #0284c7; font-weight: 700; }
+        .btn-primary { background-color: #0284c7; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; text-align: center; border: none; cursor: pointer; }
+        .btn-primary:hover { background-color: #0369a1; }
+        .flow-page { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f4f6; color: #333; }
+        .flow-container { max-width: 920px; margin: 40px auto; padding: 0 20px; }
+        .flow-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+        .flow-card h2 { margin: 0 0 16px 0; font-size: 1.15rem; color: #1e293b; }
+        .flow-hero { text-align: center; padding: 28px 20px 8px; }
+        .flow-icon { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+        .flow-icon.ok { background: #dcfce7; color: #16a34a; }
+        .flow-icon.warn { background: #fef3c7; color: #d97706; }
+        .flow-icon.err { background: #fee2e2; color: #dc2626; }
+        .flow-title { margin: 0 0 8px 0; font-size: 1.8rem; color: #1e293b; font-weight: 800; }
+        .flow-sub { color: #64748b; margin: 0 auto; max-width: 600px; line-height: 1.5; }
+        .code-box { background: #f0f9ff; border: 2px dashed #38bdf8; border-radius: 12px; padding: 20px; text-align: center; margin: 20px 0; }
+        .code-box .label { font-size: 0.8rem; color: #64748b; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .code-box .code { font-size: 2.2rem; font-weight: 800; color: #0284c7; letter-spacing: 3px; margin: 6px 0 12px; font-family: Consolas, 'Courier New', monospace; }
+        .summary-row { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px dashed #e2e8f0; font-size: 0.95rem; }
+        .summary-row:last-child { border-bottom: none; }
+        .summary-row span:first-child { color: #64748b; }
+        .summary-row strong { color: #0f172a; text-align: right; }
+        .summary-row.pagado strong { color: #16a34a; }
+        .summary-row.saldo strong { color: #b45309; }
+        .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .btn-outline { background: #fff; color: #0284c7; border: 2px solid #0284c7; padding: 9px 18px; border-radius: 5px; font-weight: bold; text-decoration: none; display: inline-block; cursor: pointer; font-size: 0.95rem; }
+        .btn-outline:hover { background: #f0f9ff; }
+        .actions-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+        .status-pill { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .status-pill.ok { background: #dcfce7; color: #166534; }
+        .status-pill.pend { background: #fef9c3; color: #854d0e; }
+        .status-pill.cancel { background: #fee2e2; color: #991b1b; }
+        .alert { border-radius: 8px; padding: 12px 16px; font-size: 0.9rem; line-height: 1.45; }
+        .alert.info { background: #f0f9ff; border: 1px solid #bae6fd; color: #0c4a6e; }
+        .alert.warn { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+        .alert.err { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+        .site-footer { background: #1f2937; color: #fff; padding: 40px 50px; text-align: center; margin-top: 50px; }
+        @media (max-width: 700px) { .two-cols, .form-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body class="flow-page">
+
+    <header class="main-header">
+        <div class="logo"><h2>Tours PV</h2></div>
+        <nav class="main-nav">
+            <a href="/">Inicio</a>
+            <a href="/tours">Tours</a>
+            <a href="/yates">Yates</a>
+            <a href="/mis-reservas">Consultar mi Reserva</a>
+        </nav>
+    </header>
+
+    <main class="flow-container">
+
+        <section class="flow-hero">
+            <div class="flow-icon ok"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg></div>
+            <h1 class="flow-title">¡Reservación confirmada!</h1>
+            <p class="flow-sub">Recibimos el pago de tu anticipo. Enviamos el código y los detalles a <strong>juan@ejemplo.com</strong>.</p>
+        </section>
+
+        <div class="code-box">
+            <div class="label">Tu código de reservación</div>
+            <div class="code" id="codigo">PV-A7X9V2</div>
+            <button type="button" class="btn-outline" id="btn-copiar">Copiar código</button>
+            <p style="margin: 14px 0 0; color: #64748b; font-size: 0.85rem;">Guárdalo: con tu código y tu correo podrás consultar, modificar o cancelar tu reservación.</p>
+        </div>
+
+        <div class="two-cols">
+            <section class="flow-card">
+                <h2>Detalles del servicio</h2>
+                <div class="summary-row"><span>Servicio</span><strong>Yate Black Diamond</strong></div>
+                <div class="summary-row"><span>Fecha</span><strong>15 de octubre de 2026</strong></div>
+                <div class="summary-row"><span>Hora de salida</span><strong>09:30 AM</strong></div>
+                <div class="summary-row"><span>Duración</span><strong>4 horas</strong></div>
+                <div class="summary-row"><span>Pasajeros</span><strong>8 personas</strong></div>
+                <div class="summary-row"><span>Titular</span><strong>Juan Pérez</strong></div>
+                <div class="summary-row"><span>Teléfono</span><strong>322 123 4567</strong></div>
+            </section>
+
+            <section class="flow-card">
+                <h2>Resumen de pago</h2>
+                <div class="summary-row"><span>Total del servicio</span><strong>$26,000 MXN</strong></div>
+                <div class="summary-row pagado"><span>Anticipo pagado (50 %)</span><strong>$13,000 MXN ✔</strong></div>
+                <div class="summary-row saldo"><span>Saldo pendiente</span><strong>$13,000 MXN</strong></div>
+                <div class="summary-row"><span>Estado</span><strong><span class="status-pill ok">Anticipo pagado</span></strong></div>
+                <div class="alert warn" style="margin-top: 14px;">El saldo pendiente se liquida en <strong>efectivo o transferencia</strong> el día del servicio.</div>
+            </section>
+        </div>
+
+        <section class="flow-card">
+            <h2>¿Qué sigue?</h2>
+            <ol style="margin: 0; padding-left: 20px; line-height: 1.8; color: #475569;">
+                <li>Revisa tu correo: ahí está tu código y el comprobante del anticipo.</li>
+                <li>Presenta tu código de reservación el día del servicio.</li>
+                <li>Liquida el saldo pendiente en efectivo o transferencia.</li>
+            </ol>
+        </section>
+
+        <div class="actions-row">
+            <a href="/comprobante/PV-A7X9V2" target="_blank" rel="noopener" class="btn-primary">Descargar comprobante</a>
+            <a href="/mis-reservas" class="btn-outline">Consultar mi reserva</a>
+            <a href="/" class="btn-outline">Volver al inicio</a>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <h3>Tours PV</h3>
+        <p>Puerto Vallarta, Jalisco, México</p>
+        <p>&copy; 2026 Tours PV. Todos los derechos reservados.</p>
+    </footer>
+
+<script>
+    // Copia el código de reservación al portapapeles.
+    document.getElementById('btn-copiar').addEventListener('click', function () {
+        var btn = this, codigo = document.getElementById('codigo').textContent.trim();
+        navigator.clipboard.writeText(codigo).then(function () {
+            btn.textContent = '¡Código copiado!';
+            setTimeout(function () { btn.textContent = 'Copiar código'; }, 2000);
+        });
+    });
+    </script>
+</body>
+</html>

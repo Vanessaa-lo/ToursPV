@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestionar Reservaciones | Admin Tours PV</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="css/app.css">
     <style>
         /* Estilos del Layout Base */
         body { margin: 0; background-color: #f3f4f6; display: flex; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -80,6 +80,7 @@
             <a href="/admin/yates">Gestionar Yates (CU-07)</a>
             <a href="/admin/clientes">Directorio Clientes (CU-08)</a>
             <a href="/admin/reservas" class="active">Reservaciones (CU-09)</a>
+            <a href="/admin/pagos">Pagos</a>
             <a href="/admin/reportes">Reportes (CU-10)</a>
         </nav>
 
@@ -206,6 +207,30 @@
                             <span>Saldo Pendiente:</span>
                             <span style="color: #b45309; font-size: 1.1rem;">$13,000.00 MXN</span>
                         </div>
+
+                        <form action="#" method="POST" style="border-top: 1px solid #e2e8f0; padding-top: 15px; margin-bottom: 15px;">
+                            <div class="form-group">
+                                <label>Modificar fecha y hora</label>
+                                <div style="display: flex; gap: 8px;">
+                                    <input type="date" name="fecha" value="2026-10-15" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem;">
+                                    <input type="time" name="hora" value="09:30" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="display: flex; gap: 8px;">
+                                    <div style="flex: 1;">
+                                        <label for="edit-horas">Horas (mín. 4)</label>
+                                        <input type="number" id="edit-horas" name="horas" min="4" value="4" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem;">
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label for="edit-personas">Personas (máx. 12)</label>
+                                        <input type="number" id="edit-personas" name="personas" min="1" max="12" value="8" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem;">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-update" style="background-color: #475569;">Guardar cambios (valida disponibilidad)</button>
+                            <a href="/comprobante/PV-A7X9V2" target="_blank" rel="noopener" style="display: block; text-align: center; margin-top: 12px; color: #0284c7; font-size: 0.85rem; text-decoration: none;">Ver comprobante de la reservación</a>
+                        </form>
 
                         <form action="#" method="POST" style="border-top: 1px solid #e2e8f0; padding-top: 15px; margin-bottom: 15px;">
                             <div class="form-group">

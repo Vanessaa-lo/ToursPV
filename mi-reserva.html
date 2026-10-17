@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi reservación | Tours PV</title>
+    <style>
+        /* Estilos compartidos (los mismos de css/app.css; al pasar a Laravel van en el layout) */
+        .main-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .main-header .logo h2 { margin: 0; }
+        .main-nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; }
+        .main-nav a:hover { color: #0284c7; }
+        .main-nav a.active { color: #0284c7; font-weight: 700; }
+        .btn-primary { background-color: #0284c7; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; text-align: center; border: none; cursor: pointer; }
+        .btn-primary:hover { background-color: #0369a1; }
+        .flow-page { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f4f6; color: #333; }
+        .flow-container { max-width: 920px; margin: 40px auto; padding: 0 20px; }
+        .flow-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+        .flow-card h2 { margin: 0 0 16px 0; font-size: 1.15rem; color: #1e293b; }
+        .flow-icon.ok { background: #dcfce7; color: #16a34a; }
+        .flow-icon.warn { background: #fef3c7; color: #d97706; }
+        .summary-row { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px dashed #e2e8f0; font-size: 0.95rem; }
+        .summary-row:last-child { border-bottom: none; }
+        .summary-row span:first-child { color: #64748b; }
+        .summary-row strong { color: #0f172a; text-align: right; }
+        .summary-row.pagado strong { color: #16a34a; }
+        .summary-row.saldo strong { color: #b45309; }
+        .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .btn-outline { background: #fff; color: #0284c7; border: 2px solid #0284c7; padding: 9px 18px; border-radius: 5px; font-weight: bold; text-decoration: none; display: inline-block; cursor: pointer; font-size: 0.95rem; }
+        .btn-outline:hover { background: #f0f9ff; }
+        .btn-danger { background: #dc2626; color: #fff; border: none; padding: 11px 18px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 0.95rem; }
+        .btn-danger:disabled { background: #fca5a5; cursor: not-allowed; }
+        .status-pill { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .status-pill.ok { background: #dcfce7; color: #166534; }
+        .status-pill.pend { background: #fef9c3; color: #854d0e; }
+        .status-pill.cancel { background: #fee2e2; color: #991b1b; }
+        .alert { border-radius: 8px; padding: 12px 16px; font-size: 0.9rem; line-height: 1.45; }
+        .alert.info { background: #f0f9ff; border: 1px solid #bae6fd; color: #0c4a6e; }
+        .alert.warn { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+        .alert.err { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+        .site-footer { background: #1f2937; color: #fff; padding: 40px 50px; text-align: center; margin-top: 50px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .form-field { margin-bottom: 14px; }
+        .form-field label { display: block; font-weight: 600; font-size: 0.85rem; color: #334155; margin-bottom: 6px; }
+        .form-field input, .form-field select, .form-field textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem; font-family: inherit; }
+        .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: #0284c7; outline: none; }
+        .form-field small { display: block; margin-top: 4px; color: #64748b; font-size: 0.78rem; }
+        @media (max-width: 700px) { .two-cols, .form-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body class="flow-page">
+
+    <header class="main-header">
+        <div class="logo"><h2>Tours PV</h2></div>
+        <nav class="main-nav">
+            <a href="/">Inicio</a>
+            <a href="/tours">Tours</a>
+            <a href="/yates">Yates</a>
+            <a href="/mis-reservas" class="active">Consultar mi Reserva</a>
+        </nav>
+    </header>
+
+    <main class="flow-container">
+
+        <a href="/mis-reservas" style="color: #64748b; text-decoration: none; font-size: 0.9rem;">← Consultar otra reservación</a>
+
+        <section class="flow-card" style="margin-top: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap;">
+                <div>
+                    <div style="font-size: 0.8rem; color: #64748b; text-transform: uppercase; font-weight: 700;">Código de reservación</div>
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #0284c7; font-family: Consolas, 'Courier New', monospace; letter-spacing: 2px;">PV-A7X9V2</div>
+                </div>
+                <span class="status-pill ok">Anticipo pagado</span>
+            </div>
+        </section>
+
+        <div class="two-cols">
+            <section class="flow-card">
+                <h2>Detalles de la reservación</h2>
+                <div class="summary-row"><span>Servicio</span><strong>Yate Black Diamond</strong></div>
+                <div class="summary-row"><span>Fecha</span><strong>15 de octubre de 2026</strong></div>
+                <div class="summary-row"><span>Hora de salida</span><strong>09:30 AM</strong></div>
+                <div class="summary-row"><span>Duración</span><strong>4 horas</strong></div>
+                <div class="summary-row"><span>Pasajeros</span><strong>8 personas</strong></div>
+                <div class="summary-row"><span>Comentarios</span><strong>Solicito chalecos para niños.</strong></div>
+                <div class="summary-row"><span>Titular</span><strong>Juan Pérez</strong></div>
+                <div class="summary-row"><span>Correo</span><strong>juan@ejemplo.com</strong></div>
+            </section>
+
+            <section class="flow-card">
+                <h2>Pagos</h2>
+                <div class="summary-row"><span>Total del servicio</span><strong>$26,000 MXN</strong></div>
+                <div class="summary-row pagado"><span>Anticipo pagado (50 %)</span><strong>$13,000 MXN ✔</strong></div>
+                <div class="summary-row saldo"><span>Saldo pendiente</span><strong>$13,000 MXN</strong></div>
+                <div class="alert info" style="margin: 14px 0;">El saldo se liquida en efectivo o transferencia el día del servicio.</div>
+                <a href="/comprobante/PV-A7X9V2" target="_blank" rel="noopener" class="btn-outline">Descargar comprobante</a>
+            </section>
+        </div>
+
+        <section class="flow-card">
+            <h2>Modificar reservación</h2>
+            <form action="/mis-reservas/PV-A7X9V2" method="POST">
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="fecha">Fecha *</label>
+                        <input type="date" id="fecha" name="fecha" value="2026-10-15" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="hora">Hora de salida *</label>
+                        <input type="time" id="hora" name="hora" value="09:30" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="horas">Número de horas *</label>
+                        <input type="number" id="horas" name="horas" min="4" value="4" required>
+                        <small>Mínimo 4 horas para este yate.</small>
+                    </div>
+                    <div class="form-field">
+                        <label for="personas">Número de personas *</label>
+                        <input type="number" id="personas" name="personas" min="1" max="12" value="8" required>
+                        <small>Capacidad máxima: 12 personas.</small>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="comentarios">Comentarios adicionales</label>
+                    <textarea id="comentarios" name="comentarios" rows="2">Solicito chalecos para niños.</textarea>
+                </div>
+                <div class="alert info" style="margin-bottom: 16px;">Antes de guardar, el sistema verifica que el nuevo horario esté disponible. Si el cambio modifica el costo del servicio, el saldo pendiente se recalcula.</div>
+                <button type="submit" class="btn-primary">Guardar cambios</button>
+            </form>
+        </section>
+
+        <section class="flow-card" style="border-color: #fecaca;">
+            <h2 style="color: #991b1b;">Cancelar reservación</h2>
+            <p style="margin: 0 0 14px; color: #475569; line-height: 1.5;">Al cancelar, tu horario se libera y la reservación deja de estar activa.</p>
+            <!-- PENDIENTE con el cliente: política de reembolso del anticipo. Mientras no se confirme, el texto no promete devoluciones. -->
+            <div class="alert warn" style="margin-bottom: 14px;">El tratamiento del anticipo pagado depende de la política de cancelación de Tours PV. Si tienes dudas, escríbenos por WhatsApp antes de cancelar.</div>
+            <form action="/mis-reservas/PV-A7X9V2/cancelar" method="POST">
+                <label style="display: flex; gap: 8px; align-items: flex-start; font-size: 0.9rem; color: #475569; margin-bottom: 14px;">
+                    <input type="checkbox" id="confirmar-cancelacion" style="margin-top: 3px;">
+                    Entiendo que esta acción no se puede deshacer.
+                </label>
+                <button type="submit" class="btn-danger" id="btn-cancelar" disabled>Cancelar reservación</button>
+            </form>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <h3>Tours PV</h3>
+        <p>Puerto Vallarta, Jalisco, México</p>
+        <p>&copy; 2026 Tours PV. Todos los derechos reservados.</p>
+    </footer>
+
+<script>
+    // El botón de cancelar se habilita solo cuando la persona confirma.
+    document.getElementById('confirmar-cancelacion').addEventListener('change', function () {
+        document.getElementById('btn-cancelar').disabled = !this.checked;
+    });
+    </script>
+</body>
+</html>
