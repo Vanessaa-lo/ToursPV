@@ -46,6 +46,7 @@
         .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: #0284c7; outline: none; }
         .form-field small { display: block; margin-top: 4px; color: #64748b; font-size: 0.78rem; }
         @media (max-width: 700px) { .two-cols, .form-grid { grid-template-columns: 1fr; } }
+        .btn-secondary { background-color: #22c55e; color: #fff; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
     </style>
 </head>
 <body class="flow-page">
@@ -58,13 +59,16 @@
             <a href="/yates">Yates</a>
             <a href="/mis-reservas" class="active">Consultar mi Reserva</a>
         </nav>
+        <a href="https://wa.me/521234567890" target="_blank" rel="noopener" class="btn-secondary">Contacto WhatsApp</a>
     </header>
 
     <main class="flow-container">
 
         <a href="/mis-reservas" style="color: #64748b; text-decoration: none; font-size: 0.9rem;">← Consultar otra reservación</a>
 
-        <section class="flow-card" style="margin-top: 14px;">
+        <h1 style="margin: 14px 0 0; font-size: 1.6rem; color: #1e293b; font-weight: 800;">Mi reservación</h1>
+
+        <section class="flow-card" style="margin-top: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap;">
                 <div>
                     <div style="font-size: 0.8rem; color: #64748b; text-transform: uppercase; font-weight: 700;">Código de reservación</div>
@@ -159,3 +163,4 @@
     </script>
 </body>
 </html>
+

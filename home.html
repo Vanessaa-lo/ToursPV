@@ -22,7 +22,7 @@
         nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; }
         
         /* Hero Section */
-        .hero { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/img/hero-vallarta.jpg') center/cover; height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
+        .hero { background: linear-gradient(135deg, #0f2a43, #0284c7); /* Reemplazar por una foto real del hero */ height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
         .hero h1 { font-size: 3rem; margin-bottom: 10px; }
         
         /* Grid de Catálogo */
@@ -34,6 +34,7 @@
         .card-body { padding: 20px; }
         .precio { font-size: 1.25rem; color: #0284c7; font-weight: bold; }
         .disponibilidad { font-size: 0.85rem; color: #22c55e; margin-bottom: 15px; display: block; }
+        .card-img-placeholder { height: 200px; background-color: #e2e8f0; display: flex; align-items: center; justify-content: center; color: #64748b; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -48,7 +49,7 @@
             <a href="/yates">Yates</a>
             <a href="/mis-reservas">Consultar mi Reserva</a>
         </nav>
-        <a href="https://wa.me/521234567890" class="btn-secondary">Contacto WhatsApp</a>
+        <a href="https://wa.me/521234567890" target="_blank" rel="noopener" class="btn-secondary">Contacto WhatsApp</a>
     </header>
 
     <main>
@@ -67,13 +68,13 @@
             <p>Explora nuestras mejores experiencias guiadas.</p>
             <div class="grid-cards">
                 <div class="card">
-                    <img src="/img/islas-marietas.jpg" alt="Islas Marietas">
+                    <div class="card-img-placeholder">[Imagen Islas Marietas]</div>
                     <div class="card-body">
                         <h3>Playa Escondida en Islas Marietas</h3>
                         <p>Santuario natural con snorkel, kayak y la icónica Playa Escondida.</p>
                         <span class="precio">$1,500 MXN</span>
                         <span class="disponibilidad">✔ Disponibilidad diaria</span>
-                        <a href="/tours/islas-marietas" class="btn-primary" style="display: block; text-align: center; margin-top: 10px;">Ver Detalles</a>
+                        <a href="/tours/1" class="btn-primary" style="display: block; text-align: center; margin-top: 10px;">Ver Detalles</a>
                     </div>
                 </div>
                 </div>
@@ -86,13 +87,13 @@
             <p>Perfectos para eventos, atardeceres y lujo en alta mar.</p>
             <div class="grid-cards">
                 <div class="card">
-                    <img src="/img/yate-black-diamond.jpg" alt="Yate Black Diamond">
+                    <div class="card-img-placeholder">[Imagen Yate Black Diamond]</div>
                     <div class="card-body">
                         <h3>Yate Black Diamond</h3>
                         <p><strong>Capacidad:</strong> 12 Personas<br><strong>Tamaño:</strong> 48 Pies</p>
                         <span class="precio">$6,500 MXN / Hora</span>
                         <span class="disponibilidad">✔ Disponible hoy</span>
-                        <a href="/yates/black-diamond" class="btn-primary" style="display: block; text-align: center; margin-top: 10px;">Ver Yate</a>
+                        <a href="/yates/2" class="btn-primary" style="display: block; text-align: center; margin-top: 10px;">Ver Yate</a>
                     </div>
                 </div>
                 </div>

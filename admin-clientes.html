@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Directorio de Clientes | Admin Tours PV</title>
-    <link rel="stylesheet" href="css/app.css">
+    <style>
+        /* Estilos compartidos (los mismos de css/app.css; al pasar a Laravel van en el layout) */
+        .main-nav a.active { color: #0284c7; font-weight: 700; }
+    </style>
     <style>
         /* Estilos del Layout Base */
         body { margin: 0; background-color: #f3f4f6; display: flex; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -79,7 +82,9 @@
         </nav>
 
         <div class="sidebar-footer">
-            <button class="btn-logout">Cerrar Sesión</button>
+            <form action="/admin/logout" method="POST">
+                <button type="submit" class="btn-logout">Cerrar Sesión</button>
+            </form>
         </div>
     </aside>
 
@@ -93,21 +98,21 @@
 
         <div class="content-area">
             
-            <div class="toolbar">
+            <form class="toolbar" method="GET" action="/admin/clientes">
                 <div class="search-box">
-                    <input type="text" class="search-input" placeholder="Buscar por nombre, correo o teléfono..." value="Juan Pérez">
+                    <input type="text" name="q" aria-label="Buscar clientes" class="search-input" placeholder="Buscar por nombre, correo o teléfono..." value="Juan Pérez">
                     <button class="btn-filter" style="background-color: #0284c7; color: white; border-color: #0284c7;">Buscar</button>
                 </div>
                 <div>
-                    <select class="btn-filter" aria-label="Filtrar por promociones">
-                        <option>Todos los clientes</option>
-                        <option>Solo suscritos a promociones</option>
+                    <select class="btn-filter" name="promociones" aria-label="Filtrar por promociones" onchange="this.form.submit()">
+                        <option value="">Todos los clientes</option>
+                        <option value="suscritos">Solo suscritos a promociones</option>
                     </select>
-                    <button class="btn-filter">⇅ Ordenar: A-Z</button>
+                    <button type="button" class="btn-filter">⇅ Ordenar: A-Z</button>
                     <a href="#enviar-promocion" class="btn-filter" style="text-decoration: none; display: inline-block;">✉ Enviar promoción</a>
-                    <button class="btn-filter">🖨 Exportar Lista</button>
+                    <button type="button" class="btn-filter">🖨 Exportar Lista</button>
                 </div>
-            </div>
+            </form>
 
             <div class="admin-panel">
                 <div class="admin-panel-header">

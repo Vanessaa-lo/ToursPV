@@ -21,7 +21,7 @@
         
         /* Caja del formulario de búsqueda */
         .portal-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); width: 100%; max-width: 450px; border: 1px solid #e5e7eb; }
-        .portal-box h2 { margin-top: 0; margin-bottom: 10px; color: #1e293b; text-align: center; font-size: 1.6rem; font-weight: 800; }
+        .portal-box h1, .portal-box h2 { margin-top: 0; margin-bottom: 10px; color: #1e293b; text-align: center; font-size: 1.6rem; font-weight: 800; }
         .portal-subtitle { text-align: center; color: #6b7280; font-size: 0.9rem; margin-bottom: 30px; display: block; line-height: 1.5; }
         
         /* Campos de Entrada */
@@ -42,6 +42,8 @@
         .ayuda-box h4 { margin: 0 0 8px 0; color: #475569; font-size: 0.85rem; text-transform: uppercase; }
         .ayuda-text { font-size: 0.85rem; color: #6b7280; line-height: 1.5; margin: 0; }
         .ayuda-text strong { color: #1e293b; }
+        .btn-secondary { background-color: #22c55e; color: #fff; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
+        .site-footer { background: #1f2937; color: #fff; padding: 40px 50px; text-align: center; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -54,11 +56,12 @@
             <a href="/yates">Yates</a>
             <a href="/mis-reservas" class="active">Consultar mi Reserva</a>
         </nav>
+        <a href="https://wa.me/521234567890" target="_blank" rel="noopener" class="btn-secondary">Contacto WhatsApp</a>
     </header>
 
     <main class="portal-container">
         <div class="portal-box">
-            <h2>Gestionar mi Reserva</h2>
+            <h1>Gestionar mi Reserva</h1>
             <span class="portal-subtitle">Accede de forma segura para consultar itinerarios, realizar modificaciones de fecha, descargar comprobantes o solicitar cancelaciones.</span>
             
             <form action="/mis-reservas" method="POST">
@@ -83,6 +86,12 @@
             </div>
         </div>
     </main>
+
+    <footer class="site-footer">
+        <h3>Tours PV</h3>
+        <p>Puerto Vallarta, Jalisco, México</p>
+        <p>&copy; 2026 Tours PV. Todos los derechos reservados.</p>
+    </footer>
 
 </body>
 </html>

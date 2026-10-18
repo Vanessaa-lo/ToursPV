@@ -57,6 +57,8 @@
         
         /* Estado de Disponibilidad */
         .disponibilidad-status { font-size: 0.85rem; color: #16a34a; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+        .btn-secondary { background-color: #22c55e; color: #fff; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
+        .site-footer { background: #1f2937; color: #fff; padding: 40px 50px; text-align: center; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -69,6 +71,7 @@
             <a href="/yates">Yates</a>
             <a href="/mis-reservas">Consultar mi Reserva</a>
         </nav>
+        <a href="https://wa.me/521234567890" target="_blank" rel="noopener" class="btn-secondary">Contacto WhatsApp</a>
     </header>
 
     <main class="container">
@@ -77,10 +80,10 @@
             <p>Explora actividades guiadas por expertos y vive aventuras inolvidables en la costa de Jalisco.</p>
         </div>
 
-        <div class="barra-filtros">
+        <form class="barra-filtros" method="GET" action="/tours">
             <div class="grupo-filtro">
                 <label for="ordenar" style="font-size: 0.9rem; font-weight: 500; color: #475569;">Ordenar por:</label>
-                <select id="ordenar" class="select-filtro">
+                <select id="ordenar" name="orden" class="select-filtro" onchange="this.form.submit()">
                     <option value="populares">Más populares</option>
                     <option value="precio-bajo">Precio: menor a mayor</option>
                     <option value="precio-alto">Precio: mayor a menor</option>
@@ -89,7 +92,7 @@
             <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">
                 Mostrando 3 experiencias disponibles
             </div>
-        </div>
+        </form>
 
         <div class="grid-tours">
             
@@ -170,6 +173,12 @@
 
         </div>
     </main>
+
+    <footer class="site-footer">
+        <h3>Tours PV</h3>
+        <p>Puerto Vallarta, Jalisco, México</p>
+        <p>&copy; 2026 Tours PV. Todos los derechos reservados.</p>
+    </footer>
 
 </body>
 </html>

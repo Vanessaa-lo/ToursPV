@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reportes Estadísticos | Admin Tours PV</title>
-    <link rel="stylesheet" href="css/app.css">
+    <style>
+        /* Estilos compartidos (los mismos de css/app.css; al pasar a Laravel van en el layout) */
+        .main-nav a.active { color: #0284c7; font-weight: 700; }
+    </style>
     <style>
         /* Estilos del Layout Base */
         body { margin: 0; background-color: #f3f4f6; display: flex; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -80,7 +83,9 @@
         </nav>
 
         <div class="sidebar-footer">
-            <button class="btn-logout">Cerrar Sesión</button>
+            <form action="/admin/logout" method="POST">
+                <button type="submit" class="btn-logout">Cerrar Sesión</button>
+            </form>
         </div>
     </aside>
 
@@ -94,26 +99,26 @@
 
         <div class="content-area">
             
-            <div class="report-filters">
+            <form class="report-filters" method="GET" action="/admin/reportes">
                 <div class="filter-group">
                     <label for="fecha-inicio">Fecha de Inicio</label>
-                    <input type="date" id="fecha-inicio" class="filter-control" value="2026-05-01">
+                    <input type="date" id="fecha-inicio" name="fecha_inicio" class="filter-control" value="2026-05-01">
                 </div>
                 <div class="filter-group">
                     <label for="fecha-fin">Fecha de Fin</label>
-                    <input type="date" id="fecha-fin" class="filter-control" value="2026-05-24">
+                    <input type="date" id="fecha-fin" name="fecha_fin" class="filter-control" value="2026-05-24">
                 </div>
                 <div class="filter-group">
                     <label for="tipo-servicio">Categoría de Servicio</label>
-                    <select id="tipo-servicio" class="filter-control">
+                    <select id="tipo-servicio" name="servicio" class="filter-control">
                         <option value="todos">Todos los servicios</option>
                         <option value="tours">Solo Tours</option>
                         <option value="yates">Solo Rentas de Yates</option>
                     </select>
                 </div>
                 <button class="btn-report btn-generate">Filtrar Datos</button>
-                <button class="btn-report btn-export">🖨 Descargar PDF</button>
-            </div>
+                <button type="submit" formaction="/admin/reportes/pdf" class="btn-report btn-export">🖨 Descargar PDF</button>
+            </form>
 
             <div class="stats-grid">
                 <div class="stat-card" style="border-top-color: #16a34a;">

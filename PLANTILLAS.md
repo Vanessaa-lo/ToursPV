@@ -32,8 +32,8 @@ los TS/UT/IT/PE/VL son los casos de prueba de la sección 17.
 | `admin-tours.html` | `/admin/tours` | RF-23 | TS-14 |
 | `admin-yates.html` | `/admin/yates` | RF-10, RF-24 | TS-15, UT-03 |
 | `admin-clientes.html` | `/admin/clientes` | RF-25 + promociones | TS-16 |
-| `admin-reservas.html` | `/admin/reservas` | RF-12, RF-22, RF-26 | TS-17 |
-| `admin-pagos.html` | `/admin/pagos` | RF-18, RF-22 (diagrama 4.1.7) | IT-05 |
+| `admin-reservas.html` | `/admin/reservas` | RF-12, RF-22 (registrar el saldo), RF-26 | TS-17, IT-05 |
+| `admin-pagos.html` | `/admin/pagos` | RF-18 (consultar transacciones y su estado; el saldo se registra en reservaciones) | IT-05 |
 | `admin-reportes.html` | `/admin/reportes` | RF-27 | TS-18 |
 
 ## Pendiente de definir

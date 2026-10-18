@@ -64,6 +64,8 @@
         
         /* Estado de Disponibilidad */
         .disponibilidad-status { font-size: 0.85rem; color: #16a34a; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+        .btn-secondary { background-color: #22c55e; color: #fff; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
+        .site-footer { background: #1f2937; color: #fff; padding: 40px 50px; text-align: center; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -76,6 +78,7 @@
             <a href="/yates" class="active">Yates</a>
             <a href="/mis-reservas">Consultar mi Reserva</a>
         </nav>
+        <a href="https://wa.me/521234567890" target="_blank" rel="noopener" class="btn-secondary">Contacto WhatsApp</a>
     </header>
 
     <main class="container">
@@ -84,10 +87,10 @@
             <p>Compara las especificaciones de nuestra flota exclusiva y selecciona la embarcación ideal para tu grupo.</p>
         </div>
 
-        <div class="barra-filtros">
+        <form class="barra-filtros" method="GET" action="/yates">
             <div class="grupo-filtro">
                 <label for="filtrar-capacidad" style="font-size: 0.9rem; font-weight: 500; color: #475569;">Filtrar por tamaño:</label>
-                <select id="filtrar-capacidad" class="select-filtro">
+                <select id="filtrar-capacidad" name="tamano" class="select-filtro" onchange="this.form.submit()">
                     <option value="todos">Todas las esloras</option>
                     <option value="pequeno">Menos de 40 pies</option>
                     <option value="grande">Más de 40 pies</option>
@@ -96,7 +99,7 @@
             <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">
                 Mostrando 3 embarcaciones verificadas
             </div>
-        </div>
+        </form>
 
         <div class="grid-yates">
             
@@ -201,6 +204,12 @@
 
         </div>
     </main>
+
+    <footer class="site-footer">
+        <h3>Tours PV</h3>
+        <p>Puerto Vallarta, Jalisco, México</p>
+        <p>&copy; 2026 Tours PV. Todos los derechos reservados.</p>
+    </footer>
 
 </body>
 </html>

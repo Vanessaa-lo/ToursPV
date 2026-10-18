@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestionar Reservaciones | Admin Tours PV</title>
-    <link rel="stylesheet" href="css/app.css">
+    <style>
+        /* Estilos compartidos (los mismos de css/app.css; al pasar a Laravel van en el layout) */
+        .main-nav a.active { color: #0284c7; font-weight: 700; }
+    </style>
     <style>
         /* Estilos del Layout Base */
         body { margin: 0; background-color: #f3f4f6; display: flex; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -85,7 +88,9 @@
         </nav>
 
         <div class="sidebar-footer">
-            <button class="btn-logout">Cerrar Sesión</button>
+            <form action="/admin/logout" method="POST">
+                <button type="submit" class="btn-logout">Cerrar Sesión</button>
+            </form>
         </div>
     </aside>
 
@@ -99,20 +104,20 @@
 
         <div class="content-area">
             
-            <div class="filters-bar">
-                <input type="text" placeholder="Buscar por código de reserva..." value="PV-A7X9V2" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; max-width: 300px; flex: 1;">
-                <select class="select-filter">
+            <form class="filters-bar" method="GET" action="/admin/reservas">
+                <input type="text" name="q" aria-label="Buscar reservación" placeholder="Buscar por código de reserva..." value="PV-A7X9V2" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; max-width: 300px; flex: 1;">
+                <select class="select-filter" name="estado" onchange="this.form.submit()">
                     <option value="">Todos los estados</option>
                     <option value="confirmed" selected>Confirmadas / Pagadas</option>
                     <option value="pending">Pendientes</option>
                     <option value="cancelled">Canceladas</option>
                 </select>
-                <select class="select-filter">
+                <select class="select-filter" name="servicio" onchange="this.form.submit()">
                     <option value="">Todos los servicios</option>
                     <option value="tours">Solo Tours</option>
                     <option value="yachts">Solo Yates</option>
                 </select>
-            </div>
+            </form>
 
             <div class="crud-layout">
                 
@@ -240,7 +245,16 @@
                                     <option value="transferencia">Transferencia</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="monto-saldo">Monto recibido (MXN) *</label>
+                                <input type="number" id="monto-saldo" name="monto_saldo" value="13000" min="0" step="0.01" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem;">
+                            </div>
+                            <div class="form-group">
+                                <label for="referencia-saldo">Referencia o nota (opcional)</label>
+                                <input type="text" id="referencia-saldo" name="referencia_saldo" placeholder="Ej. Cobrado en efectivo en el muelle principal." style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem;">
+                            </div>
                             <button type="submit" class="btn-update" style="background-color: #16a34a;">Marcar Saldo como Cobrado</button>
+                            <p style="font-size: 0.8rem; color: #64748b; margin: 12px 0 0; line-height: 1.4;">Al registrar el saldo, la reservación pasa a <strong>Completada</strong>.</p>
                         </form>
 
                         <form action="#" method="POST" style="border-top: 1px solid #e2e8f0; padding-top: 15px;">
@@ -256,7 +270,7 @@
 
                             <div class="form-group">
                                 <label for="admin-notes">Notas del Administrador (Interno)</label>
-                                <textarea id="admin-notes" rows="3" placeholder="Ej. El cliente solicitó hielos extra y abordará en la marina norte."></textarea>
+                                <textarea id="admin-notes" name="notas_admin" rows="3" placeholder="Ej. El cliente solicitó hielos extra y abordará en la marina norte."></textarea>
                             </div>
 
                             <button type="submit" class="btn-update">Actualizar Reservación</button>

@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Procesar Pago Seguro | Tours PV</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        /* Estilos compartidos (los mismos de css/app.css; al pasar a Laravel van en el layout) */
+        .main-nav a.active { color: #0284c7; font-weight: 700; }
+    </style>
     <style>
         /* Estilos específicos para la Pasarela de Pago */
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f3f4f6; }
@@ -52,13 +55,18 @@
         
         /* Garantía de Seguridad */
         .seguridad-badge { display: flex; align-items: center; justify-content: center; gap: 8px; color: #64748b; font-size: 0.8rem; margin-top: 15px; font-weight: 500; }
+        .btn-secondary { background-color: #22c55e; color: #fff; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
+        .site-footer { background: #1f2937; color: #fff; padding: 40px 50px; text-align: center; margin-top: 50px; }
     </style>
 </head>
 <body>
 
     <header class="checkout-header">
         <h2>Tours PV — Checkout Seguro</h2>
-        <a href="javascript:history.back()" class="btn-back">← Volver al servicio</a>
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <a href="javascript:history.back()" class="btn-back">← Volver al servicio</a>
+            <a href="https://wa.me/521234567890" target="_blank" rel="noopener" class="btn-secondary">Contacto WhatsApp</a>
+        </div>
     </header>
 
     <div class="layout-container">
@@ -117,14 +125,13 @@
         </section>
 
         <aside class="form-col">
-            <h2 class="form-title">Pago del Anticipo</h2>
+            <h1 class="form-title">Pago del Anticipo</h1>
             <span class="form-subtitle">Vas a pagar el 50% de anticipo de forma segura. El resto se liquida el día del servicio.</span>
 
             <div class="metodo-pago-box active" style="text-align: center; padding: 30px 20px;">
-                <p style="color: #475569; font-size: 0.9rem; margin: 0 0 20px 0; line-height: 1.5;">
+                <p style="color: #475569; font-size: 0.9rem; margin: 0; line-height: 1.5;">
                     Al continuar serás redirigido a <strong>Stripe</strong>, nuestra pasarela de pago certificada, donde podrás pagar con tarjeta de crédito o débito. Tus datos de tarjeta nunca son procesados ni almacenados por Tours PV.
                 </p>
-                <img src="/img/stripe-badge.svg" alt="Pagos seguros con Stripe" style="height: 28px; margin-bottom: 20px;">
             </div>
 
             <form action="/checkout/stripe" method="POST">
@@ -137,6 +144,12 @@
         </aside>
         
     </div>
+
+    <footer class="site-footer">
+        <h3>Tours PV</h3>
+        <p>Puerto Vallarta, Jalisco, México</p>
+        <p>&copy; 2026 Tours PV. Todos los derechos reservados.</p>
+    </footer>
 
 </body>
 </html>
