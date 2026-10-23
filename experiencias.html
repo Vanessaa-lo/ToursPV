@@ -4,72 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de Experiencias | Tours PV</title>
-    <style>
-        /* Estilos compartidos (los mismos de css/app.css; al pasar a Laravel van en el layout) */
-        .main-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .main-header .logo h2 { margin: 0; }
-        .main-nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; }
-        .main-nav a:hover { color: #0284c7; }
-        .main-nav a.active { color: #0284c7; font-weight: 700; }
-        .btn-primary { background-color: #0284c7; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; text-align: center; border: none; cursor: pointer; }
-        .btn-primary:hover { background-color: #0369a1; }
-        .w-100 { display: block; width: 100%; box-sizing: border-box; text-align: center; }
-    </style>
-    <style>
-        /* Estilos específicos para el Catálogo de Experiencias */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f9fafb; }
-        
-        /* Contenedor Principal */
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-        
-        /* Encabezado de la Sección */
-        .header-seccion { text-align: center; margin-bottom: 35px; }
-        .header-seccion h1 { color: #1e293b; font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
-        .header-seccion p { color: #6b7280; font-size: 1.1rem; margin: 0; }
-        
-        /* Barra de Filtros y Búsqueda */
-        .barra-filtros { background: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 40px; display: flex; gap: 15px; justify-content: space-between; align-items: center; flex-wrap: wrap; border: 1px solid #e5e7eb; }
-        .grupo-filtro { display: flex; align-items: center; gap: 10px; }
-        .select-filtro { padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; background-color: white; font-size: 0.9rem; color: #475569; }
-        
-        /* Cuadrícula de Tarjetas (Grid) */
-        .grid-tours { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-        
-        /* Estructura de la Tarjeta (Card) */
-        .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; position: relative; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08); }
-        
-        /* Contenedor de Imagen de Ejemplo */
-        .card-img-placeholder { background-color: #e2e8f0; height: 220px; display: flex; align-items: center; justify-content: center; color: #64748b; font-weight: bold; font-size: 1.1rem; position: relative; }
-        .badge-categoria { position: absolute; top: 15px; right: 15px; background-color: #0284c7; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
-        
-        /* Cuerpo de la Tarjeta */
-        .card-body { padding: 25px; display: flex; flex-direction: column; flex: 1; }
-        .card-title { font-size: 1.3rem; font-weight: bold; margin: 0 0 10px 0; color: #1e293b; }
-        .card-desc { color: #6b7280; font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5; flex: 1; }
-        
-        /* Caja de Detalles Técnicos y Precio */
-        .meta-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-top: 1px solid #f1f5f9; padding-top: 15px; }
-        .precio-tag { display: flex; flex-direction: column; }
-        .precio-label { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; font-weight: bold; }
-        .precio-valor { font-size: 1.4rem; color: #0284c7; font-weight: 800; }
-        .duracion-tag { font-size: 0.85rem; color: #475569; background-color: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-weight: 500; }
-        
-        /* Estado de Disponibilidad */
-        .disponibilidad-status { font-size: 0.85rem; color: #16a34a; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
-        .btn-secondary { background-color: #22c55e; color: #fff; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
-        .site-footer { background: #1f2937; color: #fff; padding: 40px 50px; text-align: center; margin-top: 50px; }
-    </style>
+    <!-- Vinculación al CSS centralizado -->
+    <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 
     <header class="main-header">
-        <div class="logo"><h2>Tours PV</h2></div>
+        <div class="logo">
+            <h2>Tours PV</h2>
+        </div>
         <nav class="main-nav">
-            <a href="/">Inicio</a>
-            <a href="/tours" class="active">Tours</a>
-            <a href="/yates">Yates</a>
-            <a href="/mis-reservas">Consultar mi Reserva</a>
+            <a href="home.html">Inicio</a>
+            <a href="yates.html">Yates</a>
+            <a href="tour-detalle.html">Tours</a>
+            <a href="experiencias.html" class="active">Experiencias</a>
         </nav>
         <a href="https://wa.me/521234567890" target="_blank" rel="noopener" class="btn-secondary">Contacto WhatsApp</a>
     </header>
@@ -80,7 +28,7 @@
             <p>Explora actividades guiadas por expertos y vive aventuras inolvidables en la costa de Jalisco.</p>
         </div>
 
-        <form class="barra-filtros" method="GET" action="/tours">
+        <form class="barra-filtros" method="GET" action="experiencias.html">
             <div class="grupo-filtro">
                 <label for="ordenar" style="font-size: 0.9rem; font-weight: 500; color: #475569;">Ordenar por:</label>
                 <select id="ordenar" name="orden" class="select-filtro" onchange="this.form.submit()">
@@ -117,7 +65,7 @@
                         <span class="duracion-tag">⏱ 8 Horas</span>
                     </div>
                     
-                    <a href="/tours/1" class="btn-primary w-100">Ver Detalles y Reservar</a>
+                    <a href="tour-detalle.html" class="btn-primary w-100">Ver Detalles y Reservar</a>
                 </div>
             </div>
 
@@ -142,7 +90,7 @@
                         <span class="duracion-tag">⏱ 8 Horas</span>
                     </div>
                     
-                    <a href="/tours/2" class="btn-primary w-100">Ver Detalles y Reservar</a>
+                    <a href="tour-detalle.html" class="btn-primary w-100">Ver Detalles y Reservar</a>
                 </div>
             </div>
 
@@ -167,7 +115,7 @@
                         <span class="duracion-tag">⏱ 4 Horas</span>
                     </div>
                     
-                    <a href="/tours/3" class="btn-primary w-100">Ver Detalles y Reservar</a>
+                    <a href="tour-detalle.html" class="btn-primary w-100">Ver Detalles y Reservar</a>
                 </div>
             </div>
 

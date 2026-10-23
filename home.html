@@ -4,50 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tours PV | Vive la mejor experiencia en Puerto Vallarta</title>
-    <style>
-        /* Estilos compartidos (los mismos de css/app.css; al pasar a Laravel van en el layout) */
-        .main-header .logo h2 { margin: 0; }
-        .btn-primary { background-color: #0284c7; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; text-align: center; border: none; cursor: pointer; }
-        .btn-primary:hover { background-color: #0369a1; }
-        .btn-secondary { background-color: #22c55e; color: #fff; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
-    </style>
-    <style>
-        /* Estilos base de demostración */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; }
-        .btn-primary { background-color: #0284c7; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
-        .btn-secondary { background-color: #22c55e; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
-        
-        /* Navegación */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; }
-        
-        /* Hero Section */
-        .hero { background: linear-gradient(135deg, #0f2a43, #0284c7); /* Reemplazar por una foto real del hero */ height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
-        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
-        
-        /* Grid de Catálogo */
-        .seccion-catalogo { padding: 50px; max-width: 1200px; margin: 0 auto; }
-        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px; }
-        .card { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff; transition: transform 0.3s; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-        .card img { width: 100%; height: 200px; object-fit: cover; }
-        .card-body { padding: 20px; }
-        .precio { font-size: 1.25rem; color: #0284c7; font-weight: bold; }
-        .disponibilidad { font-size: 0.85rem; color: #22c55e; margin-bottom: 15px; display: block; }
-        .card-img-placeholder { height: 200px; background-color: #e2e8f0; display: flex; align-items: center; justify-content: center; color: #64748b; font-weight: bold; }
-    </style>
+    <!-- Vinculación al CSS centralizado -->
+    <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 
-    <header>
+    <header class="main-header">
         <div class="logo">
             <h2>Tours PV</h2>
         </div>
-        <nav>
-            <a href="/">Inicio</a>
-            <a href="/tours">Tours</a>
-            <a href="/yates">Yates</a>
-            <a href="/mis-reservas">Consultar mi Reserva</a>
+        <nav class="main-nav">
+            <a href="home.html" class="active">Inicio</a>
+            <a href="yates.html">Yates</a>
+            <a href="tour-detalle.html">Tours</a>
+            <a href="experiencias.html">Experiencias</a>
         </nav>
         <a href="https://wa.me/521234567890" target="_blank" rel="noopener" class="btn-secondary">Contacto WhatsApp</a>
     </header>
@@ -70,14 +40,14 @@
                 <div class="card">
                     <div class="card-img-placeholder">[Imagen Islas Marietas]</div>
                     <div class="card-body">
-                        <h3>Playa Escondida en Islas Marietas</h3>
-                        <p>Santuario natural con snorkel, kayak y la icónica Playa Escondida.</p>
+                        <h3 class="card-title">Playa Escondida en Islas Marietas</h3>
+                        <p class="card-desc">Santuario natural con snorkel, kayak y la icónica Playa Escondida.</p>
                         <span class="precio">$1,500 MXN</span>
                         <span class="disponibilidad">✔ Disponibilidad diaria</span>
-                        <a href="/tours/1" class="btn-primary" style="display: block; text-align: center; margin-top: 10px;">Ver Detalles</a>
+                        <a href="tour-detalle.html" class="btn-primary w-100" style="margin-top: 10px;">Ver Detalles</a>
                     </div>
                 </div>
-                </div>
+            </div>
         </section>
 
         <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
@@ -89,18 +59,18 @@
                 <div class="card">
                     <div class="card-img-placeholder">[Imagen Yate Black Diamond]</div>
                     <div class="card-body">
-                        <h3>Yate Black Diamond</h3>
-                        <p><strong>Capacidad:</strong> 12 Personas<br><strong>Tamaño:</strong> 48 Pies</p>
+                        <h3 class="card-title">Yate Black Diamond</h3>
+                        <p class="card-desc"><strong>Capacidad:</strong> 12 Personas<br><strong>Tamaño:</strong> 48 Pies</p>
                         <span class="precio">$6,500 MXN / Hora</span>
                         <span class="disponibilidad">✔ Disponible hoy</span>
-                        <a href="/yates/2" class="btn-primary" style="display: block; text-align: center; margin-top: 10px;">Ver Yate</a>
+                        <a href="yate-detalle.html" class="btn-primary w-100" style="margin-top: 10px;">Ver Yate</a>
                     </div>
                 </div>
-                </div>
+            </div>
         </section>
     </main>
 
-    <footer style="background-color: #1f2937; color: white; padding: 40px 50px; text-align: center;">
+    <footer class="site-footer">
         <div style="margin-bottom: 20px;">
             <h3>Tours PV</h3>
             <p>Puerto Vallarta, Jalisco, México</p>

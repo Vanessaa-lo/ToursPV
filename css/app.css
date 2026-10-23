@@ -1,25 +1,34 @@
-/* ===== Estilos compartidos de Tours PV (usados por varias páginas) ===== */
+/* ===== Estilos compartidos de Tours PV ===== */
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f9fafb; }
 
-/* Navegación pública: experiencias, yates, consulta-reserva */
+/* Navegación pública */
 .main-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 .main-header .logo h2 { margin: 0; }
-.main-nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; }
+.main-nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; transition: color 0.3s ease; }
 .main-nav a:hover { color: #0284c7; }
 .main-nav a.active { color: #0284c7; font-weight: 700; }
 
-/* Botones */
-.btn-primary { background-color: #0284c7; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; text-align: center; border: none; cursor: pointer; }
+/* ===== Botones ===== */
+.btn-primary { background-color: #0284c7; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; text-align: center; border: none; cursor: pointer; font-size: 1rem; }
 .btn-primary:hover { background-color: #0369a1; }
+.btn-primary:disabled { background-color: #94a3b8; cursor: not-allowed; }
+.btn-outline { background: #fff; color: #0284c7; border: 2px solid #0284c7; padding: 9px 18px; border-radius: 5px; font-weight: bold; text-decoration: none; display: inline-block; cursor: pointer; font-size: 0.95rem; text-align: center; }
+.btn-outline:hover { background: #f0f9ff; }
 .btn-secondary { background-color: #22c55e; color: #fff; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
+.btn-danger { background: #dc2626; color: #fff; border: none; padding: 11px 18px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 0.95rem; }
+.btn-danger:disabled { background: #fca5a5; cursor: not-allowed; }
+.btn-sm { padding: 6px 12px; font-size: 0.85rem; margin: 8px 6px 0 0; }
+.btn-reservar { width: 100%; padding: 14px; font-size: 1rem; }
 .w-100 { display: block; width: 100%; box-sizing: border-box; text-align: center; }
 
-/* Formulario de inicio de sesión del administrador */
-.admin-form-group { margin-bottom: 20px; }
-.admin-form-group label { display: block; margin-bottom: 6px; }
-.admin-input { width: 100%; padding: 12px 14px; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+/* Alertas */
+.alert { border-radius: 8px; padding: 12px 16px; font-size: 0.9rem; line-height: 1.45; }
+.alert.info { background: #f0f9ff; border: 1px solid #bae6fd; color: #0c4a6e; }
+.alert.warn { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+.alert.err { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+.disp-resultado { margin: 4px 0 16px; }
 
-
-/* ===== Páginas del flujo de reservación (confirmación, comprobante, mi reserva, errores) ===== */
+/* ===== Páginas del flujo de reservación ===== */
 .flow-page { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f4f6; color: #333; }
 .flow-container { max-width: 920px; margin: 40px auto; padding: 0 20px; }
 .flow-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
@@ -41,19 +50,11 @@
 .summary-row.pagado strong { color: #16a34a; }
 .summary-row.saldo strong { color: #b45309; }
 .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.btn-outline { background: #fff; color: #0284c7; border: 2px solid #0284c7; padding: 9px 18px; border-radius: 5px; font-weight: bold; text-decoration: none; display: inline-block; cursor: pointer; font-size: 0.95rem; }
-.btn-outline:hover { background: #f0f9ff; }
-.btn-danger { background: #dc2626; color: #fff; border: none; padding: 11px 18px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 0.95rem; }
-.btn-danger:disabled { background: #fca5a5; cursor: not-allowed; }
 .actions-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
 .status-pill { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
 .status-pill.ok { background: #dcfce7; color: #166534; }
 .status-pill.pend { background: #fef9c3; color: #854d0e; }
 .status-pill.cancel { background: #fee2e2; color: #991b1b; }
-.alert { border-radius: 8px; padding: 12px 16px; font-size: 0.9rem; line-height: 1.45; }
-.alert.info { background: #f0f9ff; border: 1px solid #bae6fd; color: #0c4a6e; }
-.alert.warn { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
-.alert.err { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
 .site-footer { background: #1f2937; color: #fff; padding: 40px 50px; text-align: center; margin-top: 50px; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .form-field { margin-bottom: 14px; }
@@ -61,11 +62,12 @@
 .form-field input, .form-field select, .form-field textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem; font-family: inherit; }
 .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: #0284c7; outline: none; }
 .form-field small { display: block; margin-top: 4px; color: #64748b; font-size: 0.78rem; }
-.disp-resultado { margin: 4px 0 16px; }
 @media (max-width: 700px) { .two-cols, .form-grid { grid-template-columns: 1fr; } }
 
-
-/* ===== Admin: subida de varias imágenes (arrastrar, vista previa y portada) ===== */
+/* ===== Admin: Formularios e Imágenes ===== */
+.admin-form-group { margin-bottom: 20px; }
+.admin-form-group label { display: block; margin-bottom: 6px; }
+.admin-input { width: 100%; padding: 12px 14px; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .dropzone { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 120px; border: 2px dashed #94a3b8; border-radius: 10px; background: #f8fafc; color: #475569; text-align: center; cursor: pointer; padding: 16px; font-weight: 400; font-size: 0.9rem; transition: border-color 0.2s, background 0.2s; }
 .dropzone:hover, .dropzone.dragover { border-color: #0284c7; background: #f0f9ff; }
@@ -86,3 +88,123 @@
 .btn-link { background: none; border: none; color: #dc2626; cursor: pointer; font-size: 0.78rem; padding: 0; text-align: left; text-decoration: underline; }
 .field-error { color: #b91c1c; font-size: 0.8rem; margin-top: 4px; min-height: 1em; }
 .imagen-ayuda { margin: 6px 0 0; font-size: 0.78rem; color: #64748b; }
+
+/* ===== Detalle de Yates y Tours ===== */
+.container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+.detalle-layout { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: start; }
+@media (max-width: 900px) { .detalle-layout { grid-template-columns: 1fr; } }
+.breadcrumb { font-size: 0.85rem; color: #64748b; margin-bottom: 20px; }
+.breadcrumb a { color: #64748b; text-decoration: none; }
+.breadcrumb a:hover { color: #0284c7; }
+
+/* Galería Detalle */
+.galeria-principal { position: relative; background-color: #e2e8f0; height: 340px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #64748b; font-weight: bold; overflow: hidden; }
+.galeria-principal img { width: 100%; height: 100%; object-fit: cover; }
+.galeria-contador { position: absolute; bottom: 12px; right: 12px; background: rgba(15, 23, 42, 0.7); color: #fff; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
+.galeria-miniaturas { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0 20px; }
+.miniatura { width: 96px; height: 68px; padding: 0; border: 3px solid transparent; border-radius: 8px; background-color: #e2e8f0; color: #64748b; font-weight: bold; cursor: pointer; overflow: hidden; }
+.miniatura img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.miniatura.activa { border-color: #0284c7; }
+
+/* Textos Detalle */
+.detalle-titulo { font-size: 1.9rem; font-weight: 800; color: #1e293b; margin: 0 0 8px 0; }
+.detalle-precio-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+.detalle-precio { font-size: 1.6rem; color: #0284c7; font-weight: 800; }
+.detalle-precio-unidad { color: #64748b; font-size: 0.95rem; }
+.badge-minimo { display: inline-block; background-color: #f1f5f9; color: #334155; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; margin-bottom: 18px; }
+.disponibilidad-status { font-size: 0.9rem; color: #16a34a; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+.disponibilidad-status.baja { color: #f59e0b; }
+.detalle-desc { color: #475569; line-height: 1.6; margin-bottom: 25px; }
+.specs-box { background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 20px 25px; }
+.specs-box h3 { margin: 0 0 12px 0; font-size: 1rem; color: #1e293b; }
+.specs-list { list-style: none; padding: 0; margin: 0; color: #475569; font-size: 0.9rem; line-height: 1.8; }
+.specs-list strong { color: #0f172a; }
+
+/* Formulario Reservación */
+.form-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 28px; position: sticky; top: 20px; }
+.form-card h2 { margin: 0 0 4px 0; font-size: 1.3rem; color: #1e293b; }
+.form-card .subtitle { color: #64748b; font-size: 0.85rem; display: block; margin-bottom: 20px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: #334155; font-size: 0.85rem; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem; font-family: inherit; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #0284c7; outline: none; }
+.form-group small.hint { display: block; margin-top: 4px; color: #64748b; font-size: 0.78rem; }
+.fila-doble { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.checkbox-row { display: flex; align-items: flex-start; gap: 8px; font-size: 0.82rem; color: #475569; margin-bottom: 18px; }
+.checkbox-row input { margin-top: 3px; }
+
+/* Desglose y Totales */
+.desglose-box { background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; }
+.desglose-row { display: flex; justify-content: space-between; font-size: 0.85rem; color: #334155; padding: 3px 0; }
+.desglose-row.total { border-top: 1px dashed #7dd3fc; margin-top: 6px; padding-top: 8px; font-weight: 700; color: #0284c7; }
+.desglose-row.saldo { color: #b45309; }
+.desglose-nota { font-size: 0.75rem; color: #64748b; margin-top: 8px; line-height: 1.4; }
+
+/* ===== Catálogo de Experiencias y Yates (Grid y Cards) ===== */
+.header-seccion { text-align: center; margin-bottom: 35px; }
+.header-seccion h1 { color: #1e293b; font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
+.header-seccion p { color: #6b7280; font-size: 1.1rem; margin: 0; }
+
+/* Barra de Filtros y Búsqueda */
+.barra-filtros { background: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 40px; display: flex; gap: 15px; justify-content: space-between; align-items: center; flex-wrap: wrap; border: 1px solid #e5e7eb; }
+.grupo-filtro { display: flex; align-items: center; gap: 10px; }
+.select-filtro { padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; background-color: white; font-size: 0.9rem; color: #475569; }
+
+/* Cuadrícula de Tarjetas (Grid) */
+.grid-tours { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+
+/* Estructura de la Tarjeta (Card) */
+.card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; position: relative; }
+.card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08); }
+
+/* Contenedor de Imagen de Ejemplo */
+.card-img-placeholder { background-color: #e2e8f0; height: 220px; display: flex; align-items: center; justify-content: center; color: #64748b; font-weight: bold; font-size: 1.1rem; position: relative; }
+.badge-categoria { position: absolute; top: 15px; right: 15px; background-color: #0284c7; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+
+/* Cuerpo de la Tarjeta */
+.card-body { padding: 25px; display: flex; flex-direction: column; flex: 1; }
+.card-title { font-size: 1.3rem; font-weight: bold; margin: 0 0 10px 0; color: #1e293b; }
+.card-desc { color: #6b7280; font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5; flex: 1; }
+
+/* Caja de Detalles Técnicos y Precio */
+.meta-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+.precio-tag { display: flex; flex-direction: column; }
+.precio-label { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; font-weight: bold; }
+.precio-valor { font-size: 1.4rem; color: #0284c7; font-weight: 800; }
+.duracion-tag { font-size: 0.85rem; color: #475569; background-color: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-weight: 500; }
+.badge-duracion { display: inline-block; background-color: #f1f5f9; color: #334155; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; margin-bottom: 18px; }
+
+/* ===== Exclusivo de Yates (Cards) ===== */
+/* Reutilizamos el grid de tours para los yates */
+.grid-yates { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+
+/* Comparador rápido (Check integrado) */
+.comparar-badge { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.95); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.05); color: #1e293b; cursor: pointer; }
+.comparar-badge input { margin: 0; cursor: pointer; }
+
+/* Lista de Especificaciones Técnicas en la tarjeta */
+.card .specs-list { list-style: none; padding: 0; margin: 0 0 20px 0; font-size: 0.9rem; color: #475569; line-height: 1.6; }
+.card .specs-list li { margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.card .specs-list strong { color: #0f172a; }
+
+/* Etiqueta de Capacidad */
+.capacidad-tag { font-size: 0.85rem; color: #0284c7; background-color: #e0f2fe; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+
+/* ===== Inicio (Hero y Catálogo de Home) ===== */
+.hero { background: linear-gradient(135deg, #0f2a43, #0284c7); height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
+.hero h1 { font-size: 3rem; margin-bottom: 10px; }
+.seccion-catalogo { padding: 50px; max-width: 1200px; margin: 0 auto; }
+.grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px; }
+.precio { font-size: 1.25rem; color: #0284c7; font-weight: bold; }
+.disponibilidad { font-size: 0.85rem; color: #22c55e; margin-bottom: 15px; display: block; }
+
+.hero { 
+    background: linear-gradient(rgba(15, 42, 67, 0.5), rgba(2, 132, 199, 0.5)), url('../media/img/puerto_vallarta_hero.jpeg') no-repeat center center/cover; 
+    height: 80vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    color: white; 
+    text-align: center; 
+}
